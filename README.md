@@ -5,9 +5,9 @@
 ## 사용 방법
 
 1. `outputs/special-lecture-generator.html`을 웹 브라우저로 엽니다.
-2. 왼쪽 입력 영역에 대회 및 특강 정보를 입력합니다.
-3. 필요한 경우 대회 로고 이미지를 선택합니다.
-4. 오른쪽 미리보기에서 안내문을 확인합니다.
+2. `대회 정보` 탭에 대회 관련 내용을 입력합니다.
+3. `특강 및 신청 정보` 탭에 특강 일정과 신청 내용을 함께 입력합니다.
+4. 오른쪽 미리보기에서 통합된 안내문을 확인합니다.
 
 별도의 설치나 빌드 과정은 필요하지 않습니다. Google Fonts를 불러오기 위해 처음 열 때 인터넷 연결이 사용될 수 있습니다.
 
@@ -16,7 +16,7 @@
 - `outputs/special-lecture-generator.html`: 최종 특강 안내문 생성기
 - `outputs/playwell-official-logo-main.png`: 플레이웰 공식 로고
 - `outputs/playwell-korea-logo.png`: 플레이웰 코리아 로고
-- `outputs/contest-logo-default.png`: 기본 대회 로고
+- `outputs/contest-logo-default.png`: 이전 디자인용 기본 대회 로고 보관본
 - `outputs/special-lecture-template.svg`: 안내문 원본 벡터 템플릿
 - `outputs/special-lecture-template.png`: 안내문 미리보기 이미지
 - `work/special-lecture-generator-check.js`: 작업 과정에서 생성된 보조 스크립트 보관본
