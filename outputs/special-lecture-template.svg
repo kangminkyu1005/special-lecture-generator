@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="3508" height="2480" viewBox="0 0 3508 2480">
+  <defs>
+    <style>
+      .kr { font-family: 'Noto Sans KR','Malgun Gothic',sans-serif; fill:#16191d; }
+      .title { font-size:130px; font-weight:800; letter-spacing:-7px; }
+      .sub { font-size:48px; font-weight:600; letter-spacing:-2px; }
+      .section { font-size:45px; font-weight:800; }
+      .body { font-size:38px; font-weight:500; letter-spacing:-1px; }
+      .value { font-size:42px; font-weight:700; letter-spacing:-2px; }
+      .small { font-size:31px; font-weight:500; }
+      .month { font-size:40px; font-weight:800; }
+      .date { font-size:31px; font-weight:600; }
+    </style>
+  </defs>
+  <rect width="3508" height="2480" fill="#fafafa"/>
+  <rect x="70" y="70" width="3368" height="2340" rx="8" fill="#ffffff" stroke="#5224a6" stroke-width="16"/>
+  <rect x="112" y="112" width="200" height="200" rx="24" fill="#1db5e8"/>
+  <text x="212" y="193" text-anchor="middle" class="kr" font-size="45" font-weight="900" fill="#fff">PLAY</text>
+  <text x="212" y="244" text-anchor="middle" class="kr" font-size="45" font-weight="900" fill="#fff">WELL</text>
+  <text x="385" y="203" class="kr title">[대회명]</text>
+  <text x="385" y="335" class="kr title">대회 및 특강 안내</text>
+  <rect x="2350" y="145" width="900" height="170" rx="85" fill="#f1ebff"/>
+  <text x="2800" y="255" text-anchor="middle" class="kr" font-size="62" font-weight="800" fill="#5224a6">특강 일정표</text>
+  <line x1="150" y1="420" x2="3358" y2="420" stroke="#e6e7ec" stroke-width="6"/>
+  <text x="160" y="525" class="kr sub">[대회 기간]에 진행되는 [대회명] 대회를 대비한 특강을 아래와 같이 안내드립니다.</text>
+  <rect x="150" y="600" width="1505" height="745" rx="42" fill="#f3f4f6"/>
+  <text x="210" y="690" class="kr section">[ 대회 정보 ]</text>
+  <text x="210" y="765" class="kr body">대회명</text><text x="440" y="765" class="kr value">[대회명]</text>
+  <text x="210" y="835" class="kr body">대회 기간</text><text x="440" y="835" class="kr value">[YYYY년 M월 D일 ~ M월 D일]</text>
+  <text x="210" y="905" class="kr body">장소</text><text x="440" y="905" class="kr value">[대회 장소]</text>
+  <text x="210" y="975" class="kr body">종목</text><text x="440" y="975" class="kr value">[대회 종목 / 부문]</text>
+  <line x1="210" y1="1025" x2="1595" y2="1025" stroke="#d7d9df" stroke-width="3"/>
+  <text x="210" y="1090" class="kr small">※ 세부 일정 및 운영 방식은 주최 측 안내에 따라 변경될 수 있습니다.</text>
+  <rect x="150" y="1415" width="1505" height="755" rx="42" fill="#f3f4f6"/>
+  <text x="210" y="1505" class="kr section">[ 특강 정보 ]</text>
+  <text x="210" y="1580" class="kr body">특강 기간</text><text x="440" y="1580" class="kr value">[YYYY년 M월 D일 ~ M월 D일]</text>
+  <text x="210" y="1650" class="kr body">특강 요일</text><text x="440" y="1650" class="kr value">토요일 · 일요일</text>
+  <text x="210" y="1720" class="kr body">특강 시간</text><text x="440" y="1720" class="kr value">오후 5시 ~ 오후 8시</text>
+  <text x="210" y="1790" class="kr body">특강 횟수</text><text x="440" y="1790" class="kr value">[특강 횟수]회</text>
+  <text x="210" y="1860" class="kr body">대상</text><text x="440" y="1860" class="kr value">[대상 학년 / 종목]</text>
+  <text x="210" y="1930" class="kr body">특강비</text><text x="440" y="1930" class="kr value">[금액]원</text>
+  <text x="210" y="2040" class="kr" font-size="34" font-weight="700" fill="#ef4444">※ 비용 청구는 별도 안내에 따라 진행됩니다.</text>
+  <text x="2490" y="560" class="kr" font-size="74" font-weight="800">[YYYY]</text>
+  <g transform="translate(1770,640)">
+    <rect width="735" height="690" rx="30" fill="#fff" stroke="#bfc2ca" stroke-width="5"/>
+    <text x="367" y="72" text-anchor="middle" class="kr month">[특강 시작월]</text>
+    <g class="kr small" text-anchor="middle"><text x="75" y="132" fill="#f05237">일</text><text x="175" y="132">월</text><text x="275" y="132">화</text><text x="375" y="132">수</text><text x="475" y="132">목</text><text x="575" y="132">금</text><text x="675" y="132" fill="#2563eb">토</text></g>
+    <g class="kr date" text-anchor="middle"><text x="75" y="205">[ ]</text><text x="175" y="205">[ ]</text><text x="275" y="205">[ ]</text><text x="375" y="205">[ ]</text><text x="475" y="205">[ ]</text><text x="575" y="205">[ ]</text><text x="675" y="205">[ ]</text><text x="75" y="285">[ ]</text><text x="175" y="285">[ ]</text><text x="275" y="285">[ ]</text><text x="375" y="285">[ ]</text><text x="475" y="285">[ ]</text><text x="575" y="285">[ ]</text><text x="675" y="285">[ ]</text></g>
+    <rect x="35" y="345" width="665" height="220" rx="20" fill="#fff0cd"/>
+    <text x="367" y="425" text-anchor="middle" class="kr" font-size="35" font-weight="800">특강 일정</text>
+    <text x="367" y="490" text-anchor="middle" class="kr" font-size="34" font-weight="600">토·일  |  오후 5시 ~ 오후 8시</text>
+  </g>
+  <g transform="translate(2600,640)">
+    <rect width="735" height="690" rx="30" fill="#fff" stroke="#bfc2ca" stroke-width="5"/>
+    <text x="367" y="72" text-anchor="middle" class="kr month">[특강 종료월]</text>
+    <g class="kr small" text-anchor="middle"><text x="75" y="132" fill="#f05237">일</text><text x="175" y="132">월</text><text x="275" y="132">화</text><text x="375" y="132">수</text><text x="475" y="132">목</text><text x="575" y="132">금</text><text x="675" y="132" fill="#2563eb">토</text></g>
+    <g class="kr date" text-anchor="middle"><text x="75" y="205">[ ]</text><text x="175" y="205">[ ]</text><text x="275" y="205">[ ]</text><text x="375" y="205">[ ]</text><text x="475" y="205">[ ]</text><text x="575" y="205">[ ]</text><text x="675" y="205">[ ]</text><text x="75" y="285">[ ]</text><text x="175" y="285">[ ]</text><text x="275" y="285">[ ]</text><text x="375" y="285">[ ]</text><text x="475" y="285">[ ]</text><text x="575" y="285">[ ]</text><text x="675" y="285">[ ]</text></g>
+    <rect x="35" y="345" width="665" height="220" rx="20" fill="#dff8f4"/>
+    <text x="367" y="425" text-anchor="middle" class="kr" font-size="35" font-weight="800">대회 일정</text>
+    <text x="367" y="490" text-anchor="middle" class="kr" font-size="34" font-weight="600">[대회 기간을 입력해 주세요]</text>
+  </g>
+  <g transform="translate(1800,1505)">
+    <rect width="1535" height="665" rx="42" fill="#fbf8ff" stroke="#e8ddff" stroke-width="4"/>
+    <text x="70" y="105" class="kr section" fill="#5224a6">신청 및 안내</text>
+    <line x1="70" y1="142" x2="1465" y2="142" stroke="#dfd4f7" stroke-width="3"/>
+    <text x="70" y="230" class="kr body">• 신청 마감: [신청 마감일]</text>
+    <text x="70" y="310" class="kr body">• 신청 방법: [신청 방법]</text>
+    <text x="70" y="390" class="kr body">• 문의: [문의처]</text>
+    <text x="70" y="505" class="kr" font-size="34" font-weight="700" fill="#ef4444">※ 대회 참가자는 특강 일정 및 유의사항을 반드시 확인해 주세요.</text>
+    <text x="70" y="575" class="kr" font-size="34" font-weight="700" fill="#ef4444">※ 특강 특성상 결석에 따른 보강·환불은 제한될 수 있습니다.</text>
+  </g>
+</svg>
