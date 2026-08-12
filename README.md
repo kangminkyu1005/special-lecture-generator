@@ -11,6 +11,8 @@
 
 별도의 설치나 빌드 과정은 필요하지 않습니다. Google Fonts를 불러오기 위해 처음 열 때 인터넷 연결이 사용될 수 있습니다.
 
+ChatGPT Sites 배포용 소스가 함께 구성되어 있으며, 사이트 루트 주소는 최종 생성기 HTML로 연결됩니다.
+
 ## 파일 구성
 
 - `outputs/special-lecture-generator.html`: 최종 특강 안내문 생성기
@@ -20,6 +22,9 @@
 - `outputs/special-lecture-template.svg`: 안내문 원본 벡터 템플릿
 - `outputs/special-lecture-template.png`: 안내문 미리보기 이미지
 - `work/special-lecture-generator-check.js`: 작업 과정에서 생성된 보조 스크립트 보관본
+- `app/`, `package.json`: ChatGPT Sites용 최소 Next.js 진입점
+- `public/`: ChatGPT Sites에서 제공되는 생성기와 이미지 자산
+- `.openai/hosting.json`: ChatGPT Sites 프로젝트 연결 정보
 
 ## 참고
 
