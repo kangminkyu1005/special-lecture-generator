@@ -6,49 +6,657 @@
 <title>플레이웰 특강 안내문 생성기</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;800;900&display=swap');
-  :root{--purple:#038b78;--ink:#001e41;--line:#c9ddd7;--paper:#fdf7ee;--soft:#edf8f4;--orange:#fdcd34;--pink:#fd744d;--cyan:#56bca7;--navy:#001e41;--teal:#038b78;--mint:#56bca7}
-  *{box-sizing:border-box} body{margin:0;background:#f5f5f7;color:var(--ink);font-family:'Noto Sans KR','Malgun Gothic',sans-serif;overflow:hidden;-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
-  .app{display:grid;grid-template-columns:390px minmax(0,1fr);height:100vh}.panel{background:#fffdf9;border-right:1px solid #d8e9e2;padding:22px 28px;overflow:hidden;display:flex;flex-direction:column}.panel h1{font-size:23px;margin:0 0 7px;color:var(--navy)}.panel>p{font-size:12px;color:#426170;line-height:1.48;margin:0 0 14px}.tabs{display:grid;grid-template-columns:repeat(2,1fr);gap:5px;margin-bottom:11px}.tab{border:1px solid #cfe4dc;background:#f5fbf8;border-radius:10px;padding:8px 2px;font:700 12px inherit;color:var(--navy);cursor:pointer}.tab.active{background:var(--teal);color:#fff;border-color:var(--teal)}.group{display:none;border-top:1px solid #dcece6;padding:11px 0 2px}.group.active{display:block}.group.active.contest-form{display:grid}.group h2{font-size:15px;margin:0 0 10px;color:var(--navy)}.field{margin-bottom:8px}.field label{display:block;font-size:12px;font-weight:800;margin-bottom:3px;color:#28495a}.field label::before{content:'•';color:var(--teal);font-size:15px;margin-right:5px}.field input,.field textarea{width:100%;border:1px solid #c9ddd7;border-radius:9px;padding:7px 9px;font:inherit;font-size:13px;outline:none}.field input:focus,.field textarea:focus{border-color:var(--teal);box-shadow:0 0 0 3px #038b7818}.field textarea{height:58px;resize:none}.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}.contest-form{grid-template-columns:1fr 1fr;gap:0 10px}.contest-form .wide{grid-column:1/-1}.default{background:#e6f5f0;border-color:#b8ddd2!important;color:#006d61;font-weight:700}.actions{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:auto;padding-top:11px;background:#fffdf9}.actions button{border:0;border-radius:10px;padding:10px 8px;font:inherit;font-size:13px;font-weight:800;cursor:pointer}.print{background:var(--teal);color:#fff}.reset{background:#e7f3ef;color:#234858}
-  .stage{padding:22px;overflow:hidden;display:flex;align-items:center;justify-content:center}.fit{width:1123px;height:794px;flex:0 0 auto;transform-origin:center center}.sheet{width:1123px;min-width:1123px;height:794px;background:var(--paper);border:4px solid var(--teal);outline:2px solid #001e41;padding:28px 34px 24px;position:relative}.top{display:grid;grid-template-columns:1fr 440px;align-items:center;gap:10px}.brand-title{display:flex;align-items:center;gap:16px}.logo{width:112px;height:52px;object-fit:contain}.title{font-size:31px;line-height:1.05;font-weight:900;letter-spacing:-2px;color:var(--navy)}.subline{grid-column:1 / -1;font-size:14px;font-weight:700;margin:1px 0 8px;color:#28495a}.schedule-title{font-size:25px;font-weight:900;text-align:center;color:var(--navy)}.year{grid-column:1/-1;font-size:27px;font-weight:900;text-align:center;margin:2px 0 0;color:var(--navy)}.content{display:grid;grid-template-columns:520px 1fr;gap:28px;height:605px}.cards{display:grid;grid-template-rows:1fr 1.35fr;gap:12px}.card{background:var(--soft);border-radius:18px;padding:15px 18px;box-shadow:0 4px 10px #038b780c}.card h3{font-size:14px;margin:0 0 7px;color:var(--navy)}.info-list{font-size:12px;line-height:1.36}.info-line{display:flex;align-items:flex-start;gap:7px;margin-bottom:3px}.info-label{font-weight:800;color:#087e6e;min-width:66px}.info-label::before{content:'●';font-size:8px;margin-right:5px;color:#fdcd34}.info-value{color:#193848;overflow-wrap:anywhere}.warn{color:#e95639;font-weight:700;margin-top:7px!important}.cal-area{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:40px 205px auto 1fr;gap:14px 16px;align-content:stretch}.calendar{border:1px solid #83bdb1;border-radius:15px;padding:9px 10px 10px;background:#fffdfa;box-shadow:0 3px 8px #038b780c}.calendar h4{text-align:center;font-size:15px;margin:0 0 7px;color:var(--navy)}.calendar table{width:100%;border-collapse:collapse;text-align:center;font-size:11px}.calendar th{font-weight:700;padding:1px 0 4px}.calendar td{height:18px;padding:1px;color:var(--navy)}.sun{color:#e95639!important}.sat{color:#2569c0!important}.lecture{background:var(--orange);font-weight:800}.contest{background:var(--pink);font-weight:800}.both{background:linear-gradient(135deg,var(--orange) 0 50%,var(--pink) 50% 100%);font-weight:900}.legend{grid-column:1/-1;display:flex;gap:22px;justify-content:center;margin:0;font-size:12px;font-weight:800;color:var(--navy)}.key{display:flex;align-items:center;gap:7px}.swatch{width:28px;height:25px;border-radius:6px}.note{grid-column:1/-1;align-self:start;background:#e7f5ef;border-radius:14px;padding:13px 18px;color:#087e6e;font-size:12px;font-weight:700;text-align:center;line-height:1.38}.empty{text-align:center;color:#809d9b}.footer-note{font-size:10px;color:#557270;text-align:right;margin-top:7px}
-  @media(max-width:820px){body{overflow:auto}.app{grid-template-columns:1fr;height:auto}.panel{height:auto;min-height:520px}.stage{height:calc(100vh - 520px);min-height:340px;padding:12px}} @page{size:A4 landscape;margin:0}@media print{html,body{background:#fff!important;-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}.panel{display:none}.app{display:block;height:auto}.stage{padding:0;display:block;height:auto}.fit{transform:none!important;width:auto;height:auto}.sheet{width:297mm;min-width:0;height:210mm;border-width:1.2mm;outline:0;overflow:hidden}.card{background:#edf8f4!important}.note{background:#e7f5ef!important}.lecture{background:#fdcd34!important}.contest{background:#fd744d!important}.both{background:#fdb95d!important}}
+
+  :root {
+    --ink: #001e41;
+    --line: #c9ddd7;
+    --paper: #fdf7ee;
+    --soft: #edf8f4;
+    --orange: #fdcd34;
+    --pink: #fd744d;
+    --teal: #038b78;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: #f5f5f7;
+    color: var(--ink);
+    font-family: 'Noto Sans KR', 'Malgun Gothic', sans-serif;
+    overflow: hidden;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  .app {
+    display: grid;
+    grid-template-columns: 390px minmax(0, 1fr);
+    height: 100vh;
+  }
+
+  .panel {
+    display: flex;
+    min-height: 0;
+    flex-direction: column;
+    padding: 22px 28px 0;
+    overflow: hidden;
+    border-right: 1px solid #d8e9e2;
+    background: #fffdf9;
+  }
+
+  .panel-head { flex: 0 0 auto; }
+  .panel h1 { margin: 0 0 7px; color: var(--ink); font-size: 23px; line-height: 1.28; }
+  .panel-head > p { margin: 0 0 14px; color: #426170; font-size: 12px; line-height: 1.62; }
+
+  .tabs {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 7px;
+    margin-bottom: 11px;
+  }
+
+  .tab {
+    min-width: 0;
+    min-height: 42px;
+    padding: 8px 6px;
+    overflow: hidden;
+    border: 1px solid #cfe4dc;
+    border-radius: 10px;
+    background: #f5fbf8;
+    color: var(--ink);
+    font: 700 12px/1.3 inherit;
+    text-overflow: ellipsis;
+    white-space: normal;
+    cursor: pointer;
+  }
+
+  .tab.active { border-color: var(--teal); background: var(--teal); color: #fff; }
+
+  .form-scroll {
+    flex: 1 1 auto;
+    min-height: 0;
+    padding-right: 4px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    scrollbar-gutter: stable;
+  }
+
+  .group { display: none; padding: 11px 0 6px; border-top: 1px solid #dcece6; }
+  .group.active { display: block; }
+  .group.active.contest-form { display: grid; }
+  .group h2 { margin: 0 0 12px; color: var(--ink); font-size: 15px; line-height: 1.42; }
+
+  .field { min-width: 0; margin-bottom: 9px; }
+  .field label { display: block; margin-bottom: 4px; color: #28495a; font-size: 12px; font-weight: 800; line-height: 1.42; }
+  .field label::before { margin-right: 5px; color: var(--teal); font-size: 15px; content: '•'; }
+
+  .field input,
+  .field textarea {
+    width: 100%;
+    min-width: 0;
+    padding: 8px 10px;
+    border: 1px solid var(--line);
+    border-radius: 9px;
+    outline: none;
+    font: inherit;
+    font-size: 13px;
+    line-height: 1.45;
+  }
+
+  .field input { min-height: 41px; }
+  .field textarea { height: 82px; resize: vertical; }
+  .field input:focus, .field textarea:focus { border-color: var(--teal); box-shadow: 0 0 0 3px #038b7818; }
+
+  .grid2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+  .contest-form { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 10px; }
+  .contest-form .wide, .wide { grid-column: 1 / -1; }
+  .default { border-color: #b8ddd2 !important; background: #e6f5f0; color: #006d61; font-weight: 700; }
+
+  .content-warning {
+    flex: 0 0 auto;
+    margin: 7px 0 0;
+    padding: 8px 10px;
+    border-radius: 9px;
+    background: #fff1ec;
+    color: #c54a31;
+    font-size: 10.5px;
+    font-weight: 700;
+    line-height: 1.42;
+  }
+
+  .actions {
+    display: grid;
+    flex: 0 0 auto;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 9px;
+    padding: 11px 0 14px;
+    border-top: 1px solid #e2eee9;
+    background: #fffdf9;
+  }
+
+  .actions button {
+    min-width: 0;
+    min-height: 44px;
+    padding: 10px 8px;
+    overflow: hidden;
+    border: 0;
+    border-radius: 10px;
+    font: 800 12.5px/1.3 inherit;
+    white-space: normal;
+    cursor: pointer;
+  }
+
+  .print { background: var(--teal); color: #fff; }
+  .reset { background: #e7f3ef; color: #234858; }
+
+  .stage { display: flex; align-items: center; justify-content: center; padding: 22px; overflow: hidden; }
+  .fit { width: 1123px; height: 794px; flex: 0 0 auto; transform-origin: center center; }
+
+  .sheet {
+    position: relative;
+    width: 1123px;
+    min-width: 1123px;
+    height: 794px;
+    padding: 27px 34px 24px;
+    border: 4px solid var(--teal);
+    outline: 2px solid var(--ink);
+    background: var(--paper);
+  }
+
+  .top { display: grid; grid-template-columns: minmax(0, 1fr) 430px; align-items: start; gap: 10px 22px; }
+  .brand-title { display: flex; min-width: 0; align-items: center; gap: 16px; }
+  .logo { width: 112px; height: 52px; flex: 0 0 auto; object-fit: contain; }
+
+  .title {
+    min-width: 0;
+    color: var(--ink);
+    font-size: 31px;
+    font-weight: 900;
+    letter-spacing: -1.7px;
+    line-height: 1.18;
+    overflow-wrap: anywhere;
+  }
+
+  .title.long-title { font-size: 27px; letter-spacing: -1.3px; }
+  .title.very-long-title { font-size: 23px; letter-spacing: -0.9px; }
+
+  .schedule-title {
+    align-self: center;
+    color: var(--ink);
+    font-size: 25px;
+    font-weight: 900;
+    line-height: 1.28;
+    text-align: center;
+  }
+
+  .subline {
+    grid-column: 1 / -1;
+    margin: 0 0 8px;
+    color: #28495a;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 1.52;
+  }
+
+  .content { display: grid; grid-template-columns: 530px minmax(0, 1fr); gap: 26px; height: 610px; }
+
+  .cards {
+    display: flex;
+    height: 610px;
+    flex-direction: column;
+    gap: 14px;
+    overflow: hidden;
+  }
+
+  .card {
+    flex: 0 0 auto;
+    padding: 18px 20px;
+    border-radius: 18px;
+    background: var(--soft);
+    box-shadow: 0 4px 10px #038b780c;
+  }
+
+  .card h3 { margin: 0 0 10px; color: var(--ink); font-size: 16px; line-height: 1.42; }
+  .info-list { font-size: 13.4px; line-height: 1.52; }
+  .info-line { display: flex; align-items: flex-start; gap: 8px; margin-bottom: 4px; }
+  .info-label { min-width: 82px; color: #087e6e; font-weight: 800; }
+  .info-label::before { margin-right: 6px; color: var(--orange); font-size: 8px; content: '●'; }
+  .info-value { color: #193848; overflow-wrap: anywhere; }
+  .warn { margin: 10px 0 0 !important; color: #e95639; font-size: 14px; font-weight: 800; line-height: 1.48; }
+
+  .cards.density-normal .card { padding: 16px 18px; }
+  .cards.density-normal .card h3 { margin-bottom: 8px; font-size: 15px; }
+  .cards.density-normal .info-list { font-size: 12.4px; line-height: 1.45; }
+  .cards.density-normal .info-line { gap: 7px; margin-bottom: 3px; }
+  .cards.density-normal .info-label { min-width: 75px; }
+  .cards.density-normal .warn { margin-top: 8px !important; font-size: 12.8px; }
+
+  .cards.density-dense .card { padding: 14px 16px; }
+  .cards.density-dense .card h3 { margin-bottom: 6px; font-size: 14px; }
+  .cards.density-dense .info-list { font-size: 11.3px; line-height: 1.37; }
+  .cards.density-dense .info-line { gap: 6px; margin-bottom: 2px; }
+  .cards.density-dense .info-label { min-width: 68px; }
+  .cards.density-dense .warn { margin-top: 6px !important; font-size: 11.5px; line-height: 1.38; }
+
+  .cards.density-min .card { padding: 12px 14px; }
+  .cards.density-min .card h3 { margin-bottom: 5px; font-size: 13px; }
+  .cards.density-min .info-list { font-size: 10.3px; line-height: 1.3; }
+  .cards.density-min .info-line { gap: 5px; margin-bottom: 1px; }
+  .cards.density-min .info-label { min-width: 63px; }
+  .cards.density-min .warn { margin-top: 5px !important; font-size: 10.5px; line-height: 1.3; }
+
+  .cal-area {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 34px 198px 198px 34px auto;
+    gap: 10px;
+    height: 610px;
+    align-content: start;
+  }
+
+  .year { color: var(--ink); font-size: 24px; font-weight: 900; line-height: 34px; text-align: center; }
+
+  .calendar {
+    padding: 10px 18px 12px;
+    border: 1px solid #83bdb1;
+    border-radius: 15px;
+    background: #fffdfa;
+    box-shadow: 0 3px 8px #038b780c;
+  }
+
+  .calendar h4 { margin: 0 0 7px; color: var(--ink); font-size: 16px; line-height: 1.3; text-align: center; }
+  .calendar h4 small { margin-left: 7px; color: #5f777d; font-size: 10px; font-weight: 700; letter-spacing: .7px; }
+  .calendar table { width: 100%; border-collapse: collapse; color: var(--ink); font-size: 12.3px; text-align: center; table-layout: fixed; }
+  .calendar th { padding: 2px 0 5px; font-weight: 800; }
+  .calendar td { height: 20px; padding: 1px; border-radius: 3px; }
+
+  .sun { color: #e95639 !important; }
+  .sat { color: #2569c0 !important; }
+  .lecture { background: var(--orange); font-weight: 900; }
+  .contest { background: var(--pink); color: var(--ink) !important; font-weight: 900; }
+  .both { background: linear-gradient(135deg, var(--orange) 0 50%, var(--pink) 50% 100%); font-weight: 900; }
+  .excluded { color: #91a09d !important; text-decoration: line-through; text-decoration-thickness: 1px; }
+
+  .legend { display: flex; align-items: center; justify-content: center; gap: 24px; color: var(--ink); font-size: 12px; font-weight: 800; }
+  .key { display: flex; align-items: center; gap: 7px; }
+  .swatch { width: 28px; height: 25px; border-radius: 6px; }
+
+  .note {
+    align-self: start;
+    padding: 12px 18px;
+    border-radius: 14px;
+    background: #e7f5ef;
+    color: #087e6e;
+    font-size: 11.5px;
+    font-weight: 700;
+    line-height: 1.5;
+    text-align: center;
+  }
+
+  .empty { margin: 56px 0 0; color: #809d9b; text-align: center; }
+  .footer-note { position: absolute; right: 34px; bottom: 19px; color: #557270; font-size: 10px; line-height: 1.4; text-align: right; }
+
+  @media (max-width: 820px) {
+    body { overflow: auto; }
+    .app { display: block; height: auto; }
+    .panel { height: 100vh; min-height: 600px; }
+    .stage { height: 70vh; min-height: 420px; padding: 12px; }
+  }
+
+  @page { size: A4 landscape; margin: 0; }
+
+  @media print {
+    html, body { background: #fff !important; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+    .panel { display: none; }
+    .app { display: block; height: auto; }
+    .stage { display: block; height: auto; padding: 0; }
+    .fit { width: auto; height: auto; transform: none !important; }
+    .sheet { width: 297mm; min-width: 0; height: 210mm; overflow: hidden; border-width: 1.2mm; outline: 0; }
+    .card { background: #edf8f4 !important; }
+    .note { background: #e7f5ef !important; }
+    .lecture { background: #fdcd34 !important; }
+    .contest { background: #fd744d !important; }
+    .both { background: #fdb95d !important; }
+  }
 </style>
 </head>
 <body>
 <main class="app">
-<aside class="panel">
-  <h1>특강 안내문 생성기</h1><p>항목을 입력하면 우측 안내문과 달력이 즉시 갱신됩니다. 비워 둔 항목은 출력에서 숨겨집니다. PDF 저장 시에도 색상이 유지되도록 설정되어 있습니다.</p>
-  <nav class="tabs" aria-label="입력 탭"><button class="tab active" data-tab="contest">대회 정보</button><button class="tab" data-tab="lecture">특강 및 신청 정보</button></nav>
-  <section class="group active contest-form" data-page="contest"><h2 class="wide">대회 정보</h2>
-    <div class="field wide"><label>대회명</label><input data-key="contestName" placeholder="예: 2026 WRO KOREA" /></div>
-    <div class="grid2 wide"><div class="field"><label>대회 시작일</label><input data-key="contestStart" type="date" /></div><div class="field"><label>대회 종료일</label><input data-key="contestEnd" type="date" /></div></div>
-    <div class="field"><label>장소</label><input data-key="venue" placeholder="예: 충북 청주 오스코(OSCO)" /></div>
-    <div class="field"><label>종목 / 부문</label><input data-key="category" placeholder="예: 미션 종목부 (Junior)" /></div>
-    <div class="field wide"><label>종목 설명</label><textarea data-key="contestDesc" placeholder="종목의 진행 방식 또는 유의사항을 입력해 주세요."></textarea></div>
+  <aside class="panel">
+    <div class="panel-head">
+      <h1>특강 안내문 생성기</h1>
+      <p>항목을 입력하면 우측 안내문과 달력이 즉시 갱신됩니다. 비워 둔 항목은 출력에서 숨겨집니다. PDF 저장 시에도 색상이 유지됩니다.</p>
+      <nav class="tabs" aria-label="입력 탭">
+        <button class="tab active" data-tab="contest">대회 정보</button>
+        <button class="tab" data-tab="lecture">특강 및 신청 정보</button>
+      </nav>
+    </div>
+
+    <div class="form-scroll">
+      <section class="group active contest-form" data-page="contest">
+        <h2 class="wide">대회 정보</h2>
+        <div class="field wide"><label>대회명</label><input data-key="contestName" placeholder="예: 2026 WRO KOREA" /></div>
+        <div class="grid2 wide">
+          <div class="field"><label>대회 시작일</label><input data-key="contestStart" type="date" /></div>
+          <div class="field"><label>대회 종료일</label><input data-key="contestEnd" type="date" /></div>
+        </div>
+        <div class="field"><label>장소</label><input data-key="venue" placeholder="예: 충북 청주 오스코" /></div>
+        <div class="field"><label>종목 / 부문</label><input data-key="category" placeholder="예: 로보 미션 중등부" /></div>
+        <div class="field wide"><label>종목 설명</label><textarea data-key="contestDesc" placeholder="종목의 진행 방식 또는 유의사항을 입력해 주세요."></textarea></div>
+      </section>
+
+      <section class="group" data-page="lecture">
+        <h2>특강 및 신청 정보</h2>
+        <div class="grid2">
+          <div class="field"><label>특강 시작일</label><input data-key="lectureStart" type="date" /></div>
+          <div class="field"><label>특강 종료일</label><input data-key="lectureEnd" type="date" /></div>
+        </div>
+        <div class="grid2">
+          <div class="field"><label>특강 횟수</label><input data-key="sessions" type="number" min="1" placeholder="예: 8" /></div>
+          <div class="field"><label>특강비</label><input data-key="fee" placeholder="예: 560,000" /></div>
+        </div>
+        <div class="field"><label>대상</label><input data-key="audience" placeholder="예: 대회 참가 예정 학생" /></div>
+        <div class="grid2">
+          <div class="field"><label>특강 요일</label><input class="default" data-key="lectureDays" value="토요일 · 일요일" /></div>
+          <div class="field"><label>특강 시간</label><input class="default" data-key="lectureTime" value="오후 5시 ~ 오후 8시" /></div>
+        </div>
+        <div class="field"><label>특강 제외일</label><input data-key="lectureExclusions" placeholder="예: 2026-08-29, 2026-08-30" /></div>
+        <div class="grid2">
+          <div class="field"><label>신청 마감일</label><input data-key="deadline" type="date" /></div>
+          <div class="field"><label>문의처</label><input data-key="contact" placeholder="예: 카카오톡 채널 플레이웰" /></div>
+        </div>
+        <div class="field"><label>신청 방법</label><input data-key="how" placeholder="예: 담당 선생님에게 신청" /></div>
+      </section>
+    </div>
+
+    <p class="content-warning" id="contentWarning" role="status" hidden>입력 내용이 안내문 영역을 초과했습니다. 종목 설명이나 안내 내용을 조금 줄여 주세요.</p>
+    <div class="actions">
+      <button class="reset" id="reset">입력 초기화</button>
+      <button class="print" onclick="window.print()">A4 인쇄 / PDF 저장</button>
+    </div>
+  </aside>
+
+  <section class="stage" id="stage">
+    <div class="fit" id="fit">
+      <article class="sheet" id="sheet">
+        <header class="top">
+          <div class="brand-title">
+            <img class="logo" src="playwell-official-logo-main.png" alt="플레이웰 공식 로고" />
+            <div class="title"><span id="v-contestName">대회명</span><br />대회 및 특강 안내</div>
+          </div>
+          <div class="schedule-title">[ 특강 일정표 ]</div>
+          <div class="subline" id="intro">대회와 특강 안내를 아래와 같이 드립니다.</div>
+        </header>
+
+        <div class="content">
+          <section class="cards" id="cards">
+            <div class="card">
+              <h3>[ 대회 정보 ]</h3>
+              <div class="info-list" id="contestInfo"></div>
+            </div>
+            <div class="card">
+              <h3>[ 특강 정보 ]</h3>
+              <div class="info-list" id="lectureInfo"></div>
+              <p class="warn">※ 비용 청구는 비대면 청구서로 별도 안내드릴 예정입니다.</p>
+            </div>
+          </section>
+
+          <section class="cal-area">
+            <div class="year" id="year">—</div>
+            <div class="calendar" id="cal1"></div>
+            <div class="calendar" id="cal2"></div>
+            <div class="legend">
+              <span class="key"><i class="swatch" style="background:var(--orange)"></i>특강</span>
+              <span class="key"><i class="swatch" style="background:var(--pink)"></i>대회</span>
+            </div>
+            <div class="note" id="note">※ 대회 참가자는 대회 준비를 위해 특강 참석을 권장합니다.<br />특강 특성상 결석에 따른 보강·환불은 불가합니다.</div>
+          </section>
+        </div>
+
+        <footer class="footer-note" id="footerNote">특강 요일: 토요일 · 일요일 · 특강 시간: 오후 5시 ~ 오후 8시</footer>
+      </article>
+    </div>
   </section>
-  <section class="group" data-page="lecture"><h2>특강 및 신청 정보</h2>
-    <div class="grid2"><div class="field"><label>특강 시작일</label><input data-key="lectureStart" type="date" /></div><div class="field"><label>특강 종료일</label><input data-key="lectureEnd" type="date" /></div></div>
-    <div class="grid2"><div class="field"><label>특강 횟수</label><input data-key="sessions" type="number" min="1" placeholder="예: 10" /></div><div class="field"><label>특강비</label><input data-key="fee" placeholder="예: 560,000" /></div></div>
-    <div class="field"><label>대상</label><input data-key="audience" placeholder="예: 대회 참가 예정 학생" /></div>
-    <div class="grid2"><div class="field"><label>특강 요일</label><input class="default" data-key="lectureDays" value="토요일 · 일요일" /></div><div class="field"><label>특강 시간</label><input class="default" data-key="lectureTime" value="오후 5시 ~ 오후 8시" /></div></div>
-    <div class="grid2"><div class="field"><label>신청 마감일</label><input data-key="deadline" type="date" /></div><div class="field"><label>문의처</label><input data-key="contact" placeholder="예: 카카오톡 채널 플레이웰" /></div></div>
-    <div class="field"><label>신청 방법</label><input data-key="how" placeholder="예: 담당 선생님에게 신청" /></div>
-  </section>
-  <div class="actions"><button class="reset" id="reset">입력 초기화</button><button class="print" onclick="window.print()">A4 인쇄 / PDF 저장</button></div>
-</aside>
-<section class="stage" id="stage"><div class="fit" id="fit"><article class="sheet" id="sheet">
-  <header class="top"><div class="brand-title"><img class="logo" src="playwell-official-logo-main.png" alt="플레이웰 공식 로고"><div class="title"><span id="v-contestName">대회명</span><br>대회 및 특강 안내</div></div><div class="schedule-title">[특강 일정표]</div><div class="subline" id="intro">대회와 특강 안내를 아래와 같이 드립니다.</div></header>
-  <div class="content"><section class="cards"><div class="card"><h3>[ 대회 정보 ]</h3><div class="info-list" id="contestInfo"></div></div><div class="card"><h3>[ 특강 정보 ]</h3><div class="info-list" id="lectureInfo"></div><p class="warn">※ 비용 청구는 비대면 청구서로 별도 안내드릴 예정입니다.</p></div></section><section class="cal-area"><div class="year" id="year">—</div><div class="calendar" id="cal1"></div><div class="calendar" id="cal2"></div><div class="legend"><span class="key"><i class="swatch" style="background:var(--orange)"></i>특강</span><span class="key"><i class="swatch" style="background:var(--pink)"></i>대회</span></div><div class="note" id="note">※ 대회 참가자는 대회 준비를 위해 특강 참석을 권장합니다.<br>특강 특성상 결석에 따른 보강·환불은 불가합니다.</div></section></div>
-  <footer class="footer-note" id="footerNote">특강 요일: 토·일 · 특강 시간: 오후 5시 ~ 오후 8시</footer>
-</article></div></section></main>
+</main>
+
 <script>
-const keys=['contestName','contestStart','contestEnd','venue','category','contestDesc','lectureStart','lectureEnd','sessions','fee','audience','lectureDays','lectureTime','deadline','contact','how']; const state={};
-const $=s=>document.querySelector(s), fmt=d=>d?new Intl.DateTimeFormat('ko-KR',{month:'numeric',day:'numeric'}).format(new Date(d+'T00:00:00')).replace('. ','/').replace('.',''):'';
-function range(a,b){if(!a||!b)return [];let x=new Date(a+'T00:00:00'),e=new Date(b+'T00:00:00'),r=[];for(;x<=e;x.setDate(x.getDate()+1))r.push(new Date(x));return r}
-function esc(v){return String(v||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
-function renderInfo(id,items){$(id).innerHTML=items.filter(([,v])=>v).map(([l,v])=>`<div class="info-line"><span class="info-label">${esc(l)}</span><span class="info-value">${esc(v).replace(/\n/g,'<br>')}</span></div>`).join('')}
-function listDates(a,b){return a&&b?`${fmt(a)} ~ ${fmt(b)}`:a?fmt(a):b?fmt(b):''}
-function makeCal(y,m){const title=new Intl.DateTimeFormat('en-US',{month:'long'}).format(new Date(y,m,1)).toUpperCase(), first=new Date(y,m,1).getDay(), days=new Date(y,m+1,0).getDate();let h=`<h4>${title}</h4><table><thead><tr><th class="sun">일</th><th>월</th><th>화</th><th>수</th><th>목</th><th>금</th><th class="sat">토</th></tr></thead><tbody><tr>`;for(let i=0;i<first;i++)h+='<td></td>';for(let d=1;d<=days;d++){let date=new Date(y,m,d),ds=date.toISOString().slice(0,10),cl=[];if(date.getDay()===0)cl.push('sun');if(date.getDay()===6)cl.push('sat');let L=state.lectureStart&&state.lectureEnd&&ds>=state.lectureStart&&ds<=state.lectureEnd&&(date.getDay()===0||date.getDay()===6);let C=state.contestStart&&state.contestEnd&&ds>=state.contestStart&&ds<=state.contestEnd;if(L)cl.push('lecture');if(C)cl.push(L?'both':'contest');h+=`<td class="${cl.join(' ')}">${d}</td>`;if((first+d)%7===0&&d<days)h+='</tr><tr>'}let tail=(first+days)%7;if(tail)h+='<td></td>'.repeat(7-tail);return h+'</tr></tbody></table>'}
-function update(){keys.forEach(k=>state[k]=$(`[data-key="${k}"]`).value.trim()); $('#v-contestName').textContent=state.contestName||'대회명'; const cd=listDates(state.contestStart,state.contestEnd), ld=listDates(state.lectureStart,state.lectureEnd);$('#intro').textContent=(cd?`${cd}에 열리는 `:'')+(state.contestName||'대회')+' 대회 참가 여부와 특강 안내를 아래와 같이 드립니다.';renderInfo('#contestInfo',[['대회명',state.contestName],['일자',cd],['장소',state.venue],['종목',state.category],['종목 설명',state.contestDesc]]);renderInfo('#lectureInfo',[['특강 기간',ld],['특강 요일',state.lectureDays],['특강 시간',state.lectureTime],['특강 횟수',state.sessions?state.sessions+'회':''],['대상',state.audience],['특강비',state.fee?state.fee+'원':''],['신청 마감',state.deadline?fmt(state.deadline):''],['신청 방법',state.how],['문의',state.contact]]);$('#footerNote').textContent=`특강 요일: ${state.lectureDays||'—'} · 특강 시간: ${state.lectureTime||'—'}`;let dates=[state.lectureStart,state.lectureEnd,state.contestStart,state.contestEnd].filter(Boolean).map(x=>new Date(x+'T00:00:00'));if(!dates.length){$('#year').textContent='—';$('#cal1').innerHTML='<p class="empty">특강 날짜를 입력해 주세요.</p>';$('#cal2').innerHTML='<p class="empty">대회 날짜를 입력해 주세요.</p>';return}dates.sort((a,b)=>a-b);let a=dates[0], b=dates[dates.length-1];$('#year').textContent=a.getFullYear()+(a.getFullYear()!==b.getFullYear()?` ~ ${b.getFullYear()}`:'');$('#cal1').innerHTML=makeCal(a.getFullYear(),a.getMonth());let n=new Date(a.getFullYear(),a.getMonth()+1);$('#cal2').innerHTML=makeCal(n.getFullYear(),n.getMonth())}
-function fitPreview(){const stage=$('#stage'),fit=$('#fit');const scale=Math.min((stage.clientWidth-44)/1123,(stage.clientHeight-44)/794,1);fit.style.transform=`scale(${Math.max(.1,scale)})`}
-document.querySelectorAll('[data-key]').forEach(e=>e.addEventListener('input',update));document.querySelectorAll('.tab').forEach(tab=>tab.onclick=()=>{document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('active',x===tab));document.querySelectorAll('[data-page]').forEach(x=>x.classList.toggle('active',x.dataset.page===tab.dataset.tab))});$('#reset').onclick=()=>{document.querySelectorAll('[data-key]').forEach(e=>e.value='');$('[data-key="lectureDays"]').value='토요일 · 일요일';$('[data-key="lectureTime"]').value='오후 5시 ~ 오후 8시';update()};window.addEventListener('resize',fitPreview);update();fitPreview();
-</script></body></html>
+const keys = [
+  'contestName', 'contestStart', 'contestEnd', 'venue', 'category', 'contestDesc',
+  'lectureStart', 'lectureEnd', 'sessions', 'fee', 'audience', 'lectureDays',
+  'lectureTime', 'lectureExclusions', 'deadline', 'contact', 'how'
+];
+
+const state = {};
+const weekdays = ['일', '월', '화', '수', '목', '금', '토'];
+const monthNames = ['JANUARY', 'FEBRUARY', 'MARCH', 'APRIL', 'MAY', 'JUNE', 'JULY', 'AUGUST', 'SEPTEMBER', 'OCTOBER', 'NOVEMBER', 'DECEMBER'];
+const $ = selector => document.querySelector(selector);
+
+function parseDate(value) {
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(value || '')) return null;
+  const [year, month, day] = value.split('-').map(Number);
+  const date = new Date(year, month - 1, day);
+  return date.getFullYear() === year && date.getMonth() === month - 1 && date.getDate() === day ? date : null;
+}
+
+function dateKey(date) {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const day = String(date.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
+}
+
+function fmt(value) {
+  const date = parseDate(value);
+  return date ? `${date.getMonth() + 1}/${date.getDate()}(${weekdays[date.getDay()]})` : '';
+}
+
+function listDates(start, end) {
+  return start && end ? `${fmt(start)} ~ ${fmt(end)}` : start ? fmt(start) : end ? fmt(end) : '';
+}
+
+function esc(value) {
+  return String(value || '').replace(/[&<>"']/g, char => ({
+    '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+  })[char]);
+}
+
+function renderInfo(id, items) {
+  $(id).innerHTML = items
+    .filter(([, value]) => value)
+    .map(([label, value]) => `<div class="info-line"><span class="info-label">${esc(label)}</span><span class="info-value">${esc(value).replace(/\n/g, '<br>')}</span></div>`)
+    .join('');
+}
+
+function getLectureDayIndexes(value) {
+  const text = String(value || '').trim();
+  if (!text) return new Set([0, 6]);
+  if (text.includes('매일')) return new Set([0, 1, 2, 3, 4, 5, 6]);
+
+  const fullNames = ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일'];
+  const found = new Set();
+  fullNames.forEach((name, index) => {
+    const shortPattern = new RegExp(`(^|[\\s,·/])${weekdays[index]}($|[\\s,·/])`);
+    if (text.includes(name) || shortPattern.test(text)) found.add(index);
+  });
+  return found.size ? found : new Set([0, 6]);
+}
+
+function getExclusionKeys(value) {
+  return new Set(String(value || '').match(/\d{4}-\d{2}-\d{2}/g) || []);
+}
+
+function formatExclusions(value) {
+  return [...getExclusionKeys(value)].map(fmt).filter(Boolean).join(', ');
+}
+
+function makeCalendar(year, month) {
+  const firstDay = new Date(year, month, 1).getDay();
+  const daysInMonth = new Date(year, month + 1, 0).getDate();
+  const lectureDays = getLectureDayIndexes(state.lectureDays);
+  const exclusions = getExclusionKeys(state.lectureExclusions);
+  let html = `<h4>${month + 1}월 <small>${monthNames[month]}</small></h4><table><thead><tr><th class="sun">일</th><th>월</th><th>화</th><th>수</th><th>목</th><th>금</th><th class="sat">토</th></tr></thead><tbody><tr>`;
+
+  for (let blank = 0; blank < firstDay; blank++) html += '<td></td>';
+
+  for (let day = 1; day <= daysInMonth; day++) {
+    const date = new Date(year, month, day);
+    const key = dateKey(date);
+    const classes = [];
+    const lectureRange = state.lectureStart && state.lectureEnd && key >= state.lectureStart && key <= state.lectureEnd;
+    const contestRange = state.contestStart && state.contestEnd && key >= state.contestStart && key <= state.contestEnd;
+    const isExcluded = lectureRange && exclusions.has(key);
+    const isLecture = lectureRange && lectureDays.has(date.getDay()) && !isExcluded;
+
+    if (date.getDay() === 0) classes.push('sun');
+    if (date.getDay() === 6) classes.push('sat');
+    if (isExcluded) classes.push('excluded');
+    if (isLecture) classes.push('lecture');
+    if (contestRange) classes.push(isLecture ? 'both' : 'contest');
+
+    html += `<td class="${classes.join(' ')}">${day}</td>`;
+    if ((firstDay + day) % 7 === 0 && day < daysInMonth) html += '</tr><tr>';
+  }
+
+  const trailing = (firstDay + daysInMonth) % 7;
+  if (trailing) html += '<td></td>'.repeat(7 - trailing);
+  return `${html}</tr></tbody></table>`;
+}
+
+function getDisplayMonths() {
+  const dates = [state.lectureStart, state.lectureEnd, state.contestStart, state.contestEnd]
+    .map(parseDate)
+    .filter(Boolean)
+    .sort((a, b) => a - b);
+
+  if (!dates.length) return [];
+  const first = dates[0];
+  const last = dates[dates.length - 1];
+  const firstMonth = new Date(first.getFullYear(), first.getMonth(), 1);
+  let secondMonth;
+
+  if (first.getFullYear() === last.getFullYear() && first.getMonth() === last.getMonth()) {
+    secondMonth = new Date(first.getFullYear(), first.getMonth() + 1, 1);
+  } else {
+    secondMonth = new Date(last.getFullYear(), last.getMonth(), 1);
+  }
+
+  return [firstMonth, secondMonth];
+}
+
+function applyTitleScale() {
+  const title = $('.title');
+  const length = (state.contestName || '').length;
+  title.classList.toggle('long-title', length > 18 && length <= 28);
+  title.classList.toggle('very-long-title', length > 28);
+}
+
+function applyInfoDensity() {
+  const cards = $('#cards');
+  const warning = $('#contentWarning');
+  const totalLength = [state.contestName, state.venue, state.category, state.contestDesc, state.audience, state.how, state.contact]
+    .join('').length;
+  const modes = totalLength <= 230
+    ? ['density-roomy', 'density-normal', 'density-dense', 'density-min']
+    : totalLength <= 430
+      ? ['density-normal', 'density-dense', 'density-min']
+      : ['density-dense', 'density-min'];
+
+  cards.classList.remove('density-roomy', 'density-normal', 'density-dense', 'density-min');
+  let modeIndex = 0;
+  cards.classList.add(modes[modeIndex]);
+
+  while (cards.scrollHeight > cards.clientHeight + 1 && modeIndex < modes.length - 1) {
+    cards.classList.remove(modes[modeIndex]);
+    modeIndex += 1;
+    cards.classList.add(modes[modeIndex]);
+  }
+
+  warning.hidden = cards.scrollHeight <= cards.clientHeight + 1;
+}
+
+function update() {
+  keys.forEach(key => { state[key] = $(`[data-key="${key}"]`).value.trim(); });
+
+  $('#v-contestName').textContent = state.contestName || '대회명';
+  const contestDates = listDates(state.contestStart, state.contestEnd);
+  const lectureDates = listDates(state.lectureStart, state.lectureEnd);
+  const exclusions = formatExclusions(state.lectureExclusions);
+
+  $('#intro').textContent = (contestDates ? `${contestDates}에 열리는 ` : '') + (state.contestName || '대회') + ' 참가 여부와 특강 안내를 아래와 같이 드립니다.';
+
+  renderInfo('#contestInfo', [
+    ['대회명', state.contestName],
+    ['일자', contestDates],
+    ['장소', state.venue],
+    ['종목', state.category],
+    ['종목 설명', state.contestDesc]
+  ]);
+
+  renderInfo('#lectureInfo', [
+    ['특강 기간', lectureDates],
+    ['특강 요일', state.lectureDays],
+    ['특강 시간', state.lectureTime],
+    ['특강 횟수', state.sessions ? `${state.sessions}회` : ''],
+    ['대상', state.audience],
+    ['특강비', state.fee ? `${state.fee}원` : ''],
+    ['제외 날짜', exclusions],
+    ['신청 마감', state.deadline ? fmt(state.deadline) : ''],
+    ['신청 방법', state.how],
+    ['문의', state.contact]
+  ]);
+
+  $('#footerNote').textContent = `특강 요일: ${state.lectureDays || '—'} · 특강 시간: ${state.lectureTime || '—'}`;
+
+  const months = getDisplayMonths();
+  if (!months.length) {
+    $('#year').textContent = '—';
+    $('#cal1').innerHTML = '<p class="empty">특강 날짜를 입력해 주세요.</p>';
+    $('#cal2').innerHTML = '<p class="empty">대회 날짜를 입력해 주세요.</p>';
+  } else {
+    const [firstMonth, secondMonth] = months;
+    $('#year').textContent = firstMonth.getFullYear() === secondMonth.getFullYear()
+      ? String(firstMonth.getFullYear())
+      : `${firstMonth.getFullYear()} ~ ${secondMonth.getFullYear()}`;
+    $('#cal1').innerHTML = makeCalendar(firstMonth.getFullYear(), firstMonth.getMonth());
+    $('#cal2').innerHTML = makeCalendar(secondMonth.getFullYear(), secondMonth.getMonth());
+  }
+
+  applyTitleScale();
+  requestAnimationFrame(applyInfoDensity);
+}
+
+function fitPreview() {
+  const stage = $('#stage');
+  const fit = $('#fit');
+  const scale = Math.min((stage.clientWidth - 44) / 1123, (stage.clientHeight - 44) / 794, 1);
+  fit.style.transform = `scale(${Math.max(.1, scale)})`;
+}
+
+document.querySelectorAll('[data-key]').forEach(element => element.addEventListener('input', update));
+
+document.querySelectorAll('.tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.tab').forEach(item => item.classList.toggle('active', item === tab));
+    document.querySelectorAll('[data-page]').forEach(page => page.classList.toggle('active', page.dataset.page === tab.dataset.tab));
+    $('.form-scroll').scrollTop = 0;
+  });
+});
+
+$('#reset').addEventListener('click', () => {
+  document.querySelectorAll('[data-key]').forEach(element => { element.value = ''; });
+  $('[data-key="lectureDays"]').value = '토요일 · 일요일';
+  $('[data-key="lectureTime"]').value = '오후 5시 ~ 오후 8시';
+  update();
+});
+
+window.addEventListener('resize', () => {
+  fitPreview();
+  applyInfoDensity();
+});
+
+update();
+fitPreview();
+</script>
+</body>
+</html>
