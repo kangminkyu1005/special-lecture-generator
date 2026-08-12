@@ -2,4 +2,6 @@
 dist/
 node_modules/
 .pnpm-store/
+.sites-runtime/
+.wrangler/
 *.log
