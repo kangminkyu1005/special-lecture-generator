@@ -128,7 +128,7 @@
   .actions {
     display: grid;
     flex: 0 0 auto;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 9px;
     padding: 11px 0 14px;
     border-top: 1px solid #e2eee9;
@@ -146,6 +146,8 @@
     white-space: normal;
     cursor: pointer;
   }
+
+  .actions button:disabled { cursor: wait; opacity: .68; }
 
   .print { background: var(--teal); color: #fff; }
   .reset { background: #e7f3ef; color: #234858; }
@@ -415,7 +417,8 @@
     <p class="content-warning" id="contentWarning" role="status" hidden>입력 내용이 안내문 영역을 초과했습니다. 대회명이나 설명·안내 내용을 조금 줄여 주세요.</p>
     <div class="actions">
       <button class="reset" id="reset">입력 초기화</button>
-      <button class="print" onclick="window.print()">A4 인쇄 / PDF 저장</button>
+      <button class="print" id="pngDownload">PNG 저장</button>
+      <button class="print" onclick="window.print()">PDF 저장</button>
     </div>
   </aside>
 
@@ -459,6 +462,7 @@
   </section>
 </main>
 
+<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js" integrity="sha512-BNaRQnYJYiPSqHHDb58B0yaPfCu+Wgds8Gp/gU33kqBtgNS4tSPHuGibyoeqMV/TJlSKda6FXzoEyYGjTe+vXA==" crossorigin="anonymous"></script>
 <script>
 const keys = [
   'contestName', 'contestStart', 'contestEnd', 'venue', 'category', 'contestDesc',
@@ -715,6 +719,100 @@ function fitPreview() {
   fit.style.transform = `scale(${Math.max(.1, scale)})`;
 }
 
+function waitForSheetImages(sheet) {
+  return Promise.all([...sheet.querySelectorAll('img')].map(image => {
+    if (image.complete && image.naturalWidth > 0) return Promise.resolve();
+    if (image.complete) return Promise.reject(new Error('image-load-failed'));
+    return new Promise((resolve, reject) => {
+      const timeout = setTimeout(() => reject(new Error('image-load-timeout')), 10000);
+      image.addEventListener('load', () => {
+        clearTimeout(timeout);
+        resolve();
+      }, { once: true });
+      image.addEventListener('error', () => {
+        clearTimeout(timeout);
+        reject(new Error('image-load-failed'));
+      }, { once: true });
+    });
+  }));
+}
+
+function downloadCanvas(canvas, filename) {
+  return new Promise((resolve, reject) => {
+    canvas.toBlob(blob => {
+      if (!blob) {
+        reject(new Error('png-encode-failed'));
+        return;
+      }
+
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = filename;
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
+      resolve();
+    }, 'image/png');
+  });
+}
+
+async function downloadPng() {
+  const button = $('#pngDownload');
+  const sheet = $('#sheet');
+  const fit = $('#fit');
+  const previousTransform = fit.style.transform;
+  const previousLabel = button.textContent;
+
+  applyTitleScale();
+  applyIntroScale();
+  applyInfoDensity();
+
+  if (layoutFlags.titleOverflow || layoutFlags.introOverflow || layoutFlags.cardsOverflow) {
+    alert('입력 내용이 안내문 영역을 초과했습니다. 내용을 조금 줄인 뒤 다시 저장해 주세요.');
+    return;
+  }
+
+  try {
+    button.disabled = true;
+    button.textContent = 'PNG 생성 중';
+
+    if (document.fonts?.ready) await document.fonts.ready;
+    await waitForSheetImages(sheet);
+
+    if (typeof html2canvas !== 'function') throw new Error('capture-library-unavailable');
+
+    fit.style.transform = 'none';
+    const canvas = await html2canvas(sheet, {
+      backgroundColor: '#fdf7ee',
+      scale: 2,
+      useCORS: true,
+      logging: false,
+      width: 1123,
+      height: 794,
+      windowWidth: 1123,
+      windowHeight: 794,
+      scrollX: 0,
+      scrollY: 0
+    });
+
+    const baseName = (state.contestName || '')
+      .replace(/[\\/:*?"<>|]/g, '')
+      .trim()
+      .replace(/\s+/g, '_')
+      .slice(0, 60);
+    await downloadCanvas(canvas, baseName ? `${baseName}_특강안내문.png` : '특강_안내문.png');
+  } catch (error) {
+    console.error(error);
+    alert('PNG 이미지를 생성하지 못했습니다. 잠시 후 다시 시도해 주세요.');
+  } finally {
+    fit.style.transform = previousTransform;
+    button.disabled = false;
+    button.textContent = previousLabel;
+  }
+}
+
 document.querySelectorAll('[data-key]').forEach(element => element.addEventListener('input', update));
 
 document.querySelectorAll('.tab').forEach(tab => {
@@ -731,6 +829,8 @@ $('#reset').addEventListener('click', () => {
   $('[data-key="lectureTime"]').value = '오후 5시 ~ 오후 8시';
   update();
 });
+
+$('#pngDownload').addEventListener('click', downloadPng);
 
 window.addEventListener('resize', () => {
   fitPreview();
