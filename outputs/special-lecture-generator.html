@@ -158,7 +158,7 @@
     width: 1123px;
     min-width: 1123px;
     height: 794px;
-    padding: 27px 34px 24px;
+    padding: 69px 34px 24px;
     border: 4px solid var(--teal);
     outline: 2px solid var(--ink);
     background: var(--paper);
@@ -169,7 +169,7 @@
     grid-template-columns: 530px minmax(0, 1fr);
     align-items: center;
     column-gap: 26px;
-    row-gap: 8px;
+    row-gap: 7px;
   }
 
   .title {
@@ -202,8 +202,8 @@
 
   .subline {
     min-width: 0;
-    grid-column: 1 / -1;
-    margin: 0 0 9px;
+    grid-column: 1;
+    margin: 0 0 11px;
     overflow: hidden;
     color: #28495a;
     font-size: 14px;
@@ -216,18 +216,16 @@
   .subline.intro-dense { font-size: 12px; }
   .subline.intro-min { font-size: 10.5px; }
 
-  .content { display: grid; grid-template-columns: 530px minmax(0, 1fr); gap: 26px; height: 610px; }
+  .content { display: grid; grid-template-columns: 530px minmax(0, 1fr); gap: 26px; height: 568px; }
 
   .cards {
     display: grid;
-    height: 610px;
-    grid-template-rows: 34px 198px 198px;
+    height: 568px;
+    grid-template-rows: 198px 198px;
     gap: 10px;
     align-content: start;
     overflow: hidden;
   }
-
-  .card-spacer { min-height: 0; }
 
   .card {
     min-height: 0;
@@ -271,13 +269,24 @@
   .cal-area {
     display: grid;
     grid-template-columns: 1fr;
-    grid-template-rows: 34px 198px 198px 34px auto;
+    grid-template-rows: 198px 198px 34px auto;
     gap: 10px;
-    height: 610px;
+    height: 568px;
     align-content: start;
   }
 
-  .year { color: var(--ink); font-size: 24px; font-weight: 900; line-height: 34px; text-align: center; }
+  .year {
+    display: flex;
+    min-width: 0;
+    align-items: center;
+    justify-content: center;
+    margin: 0 0 11px;
+    color: var(--ink);
+    font-size: 22px;
+    font-weight: 900;
+    line-height: 1.4;
+    text-align: center;
+  }
 
   .calendar {
     min-height: 0;
@@ -417,11 +426,11 @@
           <div class="title"><span id="v-contestName">대회명</span> 대회 및 특강 안내</div>
           <div class="schedule-title">[ 특강 일정표 ]</div>
           <div class="subline" id="intro">대회와 특강 안내를 아래와 같이 드립니다.</div>
+          <div class="year" id="year">—</div>
         </header>
 
         <div class="content">
           <section class="cards" id="cards">
-            <div class="card-spacer" aria-hidden="true"></div>
             <div class="card">
               <h3>[ 대회 정보 ]</h3>
               <div class="info-list" id="contestInfo"></div>
@@ -434,7 +443,6 @@
           </section>
 
           <section class="cal-area">
-            <div class="year" id="year">—</div>
             <div class="calendar" id="cal1"></div>
             <div class="calendar" id="cal2"></div>
             <div class="legend">
