@@ -164,54 +164,76 @@
     background: var(--paper);
   }
 
-  .top { display: grid; grid-template-columns: minmax(0, 1fr) 430px; align-items: start; gap: 10px 22px; }
-  .brand-title { display: flex; min-width: 0; align-items: center; gap: 16px; }
-  .logo { width: 112px; height: 52px; flex: 0 0 auto; object-fit: contain; }
+  .top {
+    display: grid;
+    grid-template-columns: 530px minmax(0, 1fr);
+    align-items: center;
+    column-gap: 26px;
+    row-gap: 8px;
+  }
 
   .title {
     min-width: 0;
     color: var(--ink);
-    font-size: 31px;
+    font-size: 28px;
     font-weight: 900;
-    letter-spacing: -1.7px;
-    line-height: 1.18;
-    overflow-wrap: anywhere;
+    letter-spacing: -1.4px;
+    line-height: 1.28;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 
-  .title.long-title { font-size: 27px; letter-spacing: -1.3px; }
-  .title.very-long-title { font-size: 23px; letter-spacing: -0.9px; }
+  .title.title-normal { font-size: 24px; letter-spacing: -1.1px; }
+  .title.title-dense { font-size: 21px; letter-spacing: -.8px; }
+  .title.title-min { font-size: 18px; letter-spacing: -.5px; }
 
   .schedule-title {
-    align-self: center;
+    display: flex;
+    min-width: 0;
+    align-items: center;
+    justify-content: center;
     color: var(--ink);
-    font-size: 25px;
+    font-size: 24px;
     font-weight: 900;
-    line-height: 1.28;
+    line-height: 1.3;
     text-align: center;
   }
 
   .subline {
+    min-width: 0;
     grid-column: 1 / -1;
-    margin: 0 0 8px;
+    margin: 0 0 9px;
+    overflow: hidden;
     color: #28495a;
     font-size: 14px;
     font-weight: 700;
     line-height: 1.52;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
+
+  .subline.intro-dense { font-size: 12px; }
+  .subline.intro-min { font-size: 10.5px; }
 
   .content { display: grid; grid-template-columns: 530px minmax(0, 1fr); gap: 26px; height: 610px; }
 
   .cards {
-    display: flex;
+    display: grid;
     height: 610px;
-    flex-direction: column;
-    gap: 14px;
+    grid-template-rows: 34px 198px 198px;
+    gap: 10px;
+    align-content: start;
     overflow: hidden;
   }
 
+  .card-spacer { min-height: 0; }
+
   .card {
-    flex: 0 0 auto;
+    min-height: 0;
+    height: 198px;
     padding: 18px 20px;
+    overflow: hidden;
     border-radius: 18px;
     background: var(--soft);
     box-shadow: 0 4px 10px #038b780c;
@@ -225,26 +247,26 @@
   .info-value { color: #193848; overflow-wrap: anywhere; }
   .warn { margin: 10px 0 0 !important; color: #e95639; font-size: 14px; font-weight: 800; line-height: 1.48; }
 
-  .cards.density-normal .card { padding: 16px 18px; }
-  .cards.density-normal .card h3 { margin-bottom: 8px; font-size: 15px; }
-  .cards.density-normal .info-list { font-size: 12.4px; line-height: 1.45; }
-  .cards.density-normal .info-line { gap: 7px; margin-bottom: 3px; }
-  .cards.density-normal .info-label { min-width: 75px; }
-  .cards.density-normal .warn { margin-top: 8px !important; font-size: 12.8px; }
+  .card.density-normal { padding: 16px 18px; }
+  .card.density-normal h3 { margin-bottom: 8px; font-size: 15px; }
+  .card.density-normal .info-list { font-size: 12.4px; line-height: 1.45; }
+  .card.density-normal .info-line { gap: 7px; margin-bottom: 3px; }
+  .card.density-normal .info-label { min-width: 75px; }
+  .card.density-normal .warn { margin-top: 8px !important; font-size: 12.8px; }
 
-  .cards.density-dense .card { padding: 14px 16px; }
-  .cards.density-dense .card h3 { margin-bottom: 6px; font-size: 14px; }
-  .cards.density-dense .info-list { font-size: 11.3px; line-height: 1.37; }
-  .cards.density-dense .info-line { gap: 6px; margin-bottom: 2px; }
-  .cards.density-dense .info-label { min-width: 68px; }
-  .cards.density-dense .warn { margin-top: 6px !important; font-size: 11.5px; line-height: 1.38; }
+  .card.density-dense { padding: 14px 16px; }
+  .card.density-dense h3 { margin-bottom: 6px; font-size: 14px; }
+  .card.density-dense .info-list { font-size: 11.3px; line-height: 1.37; }
+  .card.density-dense .info-line { gap: 6px; margin-bottom: 2px; }
+  .card.density-dense .info-label { min-width: 68px; }
+  .card.density-dense .warn { margin-top: 6px !important; font-size: 11.5px; line-height: 1.38; }
 
-  .cards.density-min .card { padding: 12px 14px; }
-  .cards.density-min .card h3 { margin-bottom: 5px; font-size: 13px; }
-  .cards.density-min .info-list { font-size: 10.3px; line-height: 1.3; }
-  .cards.density-min .info-line { gap: 5px; margin-bottom: 1px; }
-  .cards.density-min .info-label { min-width: 63px; }
-  .cards.density-min .warn { margin-top: 5px !important; font-size: 10.5px; line-height: 1.3; }
+  .card.density-min { padding: 12px 14px; }
+  .card.density-min h3 { margin-bottom: 5px; font-size: 13px; }
+  .card.density-min .info-list { font-size: 10.3px; line-height: 1.3; }
+  .card.density-min .info-line { gap: 5px; margin-bottom: 1px; }
+  .card.density-min .info-label { min-width: 63px; }
+  .card.density-min .warn { margin-top: 5px !important; font-size: 10.5px; line-height: 1.3; }
 
   .cal-area {
     display: grid;
@@ -258,7 +280,10 @@
   .year { color: var(--ink); font-size: 24px; font-weight: 900; line-height: 34px; text-align: center; }
 
   .calendar {
+    min-height: 0;
+    height: 198px;
     padding: 10px 18px 12px;
+    overflow: hidden;
     border: 1px solid #83bdb1;
     border-radius: 15px;
     background: #fffdfa;
@@ -295,7 +320,15 @@
   }
 
   .empty { margin: 56px 0 0; color: #809d9b; text-align: center; }
-  .footer-note { position: absolute; right: 34px; bottom: 19px; color: #557270; font-size: 10px; line-height: 1.4; text-align: right; }
+  .footer-logo {
+    position: absolute;
+    right: 34px;
+    bottom: 17px;
+    width: 118px;
+    height: 40px;
+    object-fit: contain;
+    object-position: right center;
+  }
 
   @media (max-width: 820px) {
     body { overflow: auto; }
@@ -370,7 +403,7 @@
       </section>
     </div>
 
-    <p class="content-warning" id="contentWarning" role="status" hidden>입력 내용이 안내문 영역을 초과했습니다. 종목 설명이나 안내 내용을 조금 줄여 주세요.</p>
+    <p class="content-warning" id="contentWarning" role="status" hidden>입력 내용이 안내문 영역을 초과했습니다. 대회명이나 설명·안내 내용을 조금 줄여 주세요.</p>
     <div class="actions">
       <button class="reset" id="reset">입력 초기화</button>
       <button class="print" onclick="window.print()">A4 인쇄 / PDF 저장</button>
@@ -381,16 +414,14 @@
     <div class="fit" id="fit">
       <article class="sheet" id="sheet">
         <header class="top">
-          <div class="brand-title">
-            <img class="logo" src="playwell-official-logo-main.png" alt="플레이웰 공식 로고" />
-            <div class="title"><span id="v-contestName">대회명</span><br />대회 및 특강 안내</div>
-          </div>
+          <div class="title"><span id="v-contestName">대회명</span> 대회 및 특강 안내</div>
           <div class="schedule-title">[ 특강 일정표 ]</div>
           <div class="subline" id="intro">대회와 특강 안내를 아래와 같이 드립니다.</div>
         </header>
 
         <div class="content">
           <section class="cards" id="cards">
+            <div class="card-spacer" aria-hidden="true"></div>
             <div class="card">
               <h3>[ 대회 정보 ]</h3>
               <div class="info-list" id="contestInfo"></div>
@@ -414,7 +445,7 @@
           </section>
         </div>
 
-        <footer class="footer-note" id="footerNote">특강 요일: 토요일 · 일요일 · 특강 시간: 오후 5시 ~ 오후 8시</footer>
+        <img class="footer-logo" src="playwell-official-logo-main.png" alt="플레이웰 공식 로고" />
       </article>
     </div>
   </section>
@@ -544,35 +575,77 @@ function getDisplayMonths() {
   return [firstMonth, secondMonth];
 }
 
+const layoutFlags = { titleOverflow: false, introOverflow: false, cardsOverflow: false };
+
+function updateContentWarning() {
+  $('#contentWarning').hidden = !(layoutFlags.titleOverflow || layoutFlags.introOverflow || layoutFlags.cardsOverflow);
+}
+
 function applyTitleScale() {
   const title = $('.title');
   const length = (state.contestName || '').length;
-  title.classList.toggle('long-title', length > 18 && length <= 28);
-  title.classList.toggle('very-long-title', length > 28);
+  const modes = length <= 16
+    ? ['', 'title-normal', 'title-dense', 'title-min']
+    : length <= 28
+      ? ['title-normal', 'title-dense', 'title-min']
+      : ['title-dense', 'title-min'];
+
+  title.classList.remove('title-normal', 'title-dense', 'title-min');
+  let modeIndex = 0;
+  if (modes[modeIndex]) title.classList.add(modes[modeIndex]);
+
+  while (title.scrollWidth > title.clientWidth + 1 && modeIndex < modes.length - 1) {
+    if (modes[modeIndex]) title.classList.remove(modes[modeIndex]);
+    modeIndex += 1;
+    if (modes[modeIndex]) title.classList.add(modes[modeIndex]);
+  }
+
+  layoutFlags.titleOverflow = title.scrollWidth > title.clientWidth + 1;
+  updateContentWarning();
+}
+
+function applyIntroScale() {
+  const intro = $('#intro');
+  const modes = ['', 'intro-dense', 'intro-min'];
+  intro.classList.remove('intro-dense', 'intro-min');
+  let modeIndex = 0;
+
+  while (intro.scrollWidth > intro.clientWidth + 1 && modeIndex < modes.length - 1) {
+    if (modes[modeIndex]) intro.classList.remove(modes[modeIndex]);
+    modeIndex += 1;
+    intro.classList.add(modes[modeIndex]);
+  }
+
+  layoutFlags.introOverflow = intro.scrollWidth > intro.clientWidth + 1;
+  updateContentWarning();
 }
 
 function applyInfoDensity() {
-  const cards = $('#cards');
-  const warning = $('#contentWarning');
-  const totalLength = [state.contestName, state.venue, state.category, state.contestDesc, state.audience, state.how, state.contact]
-    .join('').length;
-  const modes = totalLength <= 230
-    ? ['density-roomy', 'density-normal', 'density-dense', 'density-min']
-    : totalLength <= 430
-      ? ['density-normal', 'density-dense', 'density-min']
-      : ['density-dense', 'density-min'];
+  let hasOverflow = false;
 
-  cards.classList.remove('density-roomy', 'density-normal', 'density-dense', 'density-min');
-  let modeIndex = 0;
-  cards.classList.add(modes[modeIndex]);
+  $('#cards').querySelectorAll('.card').forEach(card => {
+    const length = card.textContent.trim().length;
+    const modes = length <= 170
+      ? ['density-roomy', 'density-normal', 'density-dense', 'density-min']
+      : length <= 300
+        ? ['density-normal', 'density-dense', 'density-min']
+        : ['density-dense', 'density-min'];
 
-  while (cards.scrollHeight > cards.clientHeight + 1 && modeIndex < modes.length - 1) {
-    cards.classList.remove(modes[modeIndex]);
-    modeIndex += 1;
-    cards.classList.add(modes[modeIndex]);
-  }
+    card.classList.remove('density-roomy', 'density-normal', 'density-dense', 'density-min');
+    let modeIndex = 0;
+    card.classList.add(modes[modeIndex]);
 
-  warning.hidden = cards.scrollHeight <= cards.clientHeight + 1;
+    while (card.scrollHeight > card.clientHeight + 1 && modeIndex < modes.length - 1) {
+      card.classList.remove(modes[modeIndex]);
+      modeIndex += 1;
+      card.classList.add(modes[modeIndex]);
+    }
+
+    hasOverflow ||= card.scrollHeight > card.clientHeight + 1;
+  });
+
+  layoutFlags.cardsOverflow = hasOverflow;
+  updateContentWarning();
 }
 
 function update() {
@@ -606,8 +679,6 @@ function update() {
     ['문의', state.contact]
   ]);
 
-  $('#footerNote').textContent = `특강 요일: ${state.lectureDays || '—'} · 특강 시간: ${state.lectureTime || '—'}`;
-
   const months = getDisplayMonths();
   if (!months.length) {
     $('#year').textContent = '—';
@@ -622,8 +693,11 @@ function update() {
     $('#cal2').innerHTML = makeCalendar(secondMonth.getFullYear(), secondMonth.getMonth());
   }
 
-  applyTitleScale();
-  requestAnimationFrame(applyInfoDensity);
+  requestAnimationFrame(() => {
+    applyTitleScale();
+    applyIntroScale();
+    applyInfoDensity();
+  });
 }
 
 function fitPreview() {
@@ -652,6 +726,8 @@ $('#reset').addEventListener('click', () => {
 
 window.addEventListener('resize', () => {
   fitPreview();
+  applyTitleScale();
+  applyIntroScale();
   applyInfoDensity();
 });
 
