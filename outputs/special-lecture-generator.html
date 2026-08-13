@@ -49,6 +49,28 @@
   .panel h1 { margin: 0 0 7px; color: var(--ink); font-size: 23px; line-height: 1.28; }
   .panel-head > p { margin: 0 0 14px; color: #426170; font-size: 12px; line-height: 1.62; }
 
+  .savebar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    margin: -3px 0 11px;
+  }
+
+  .savebar button,
+  .planner-button {
+    min-height: 34px;
+    padding: 7px 10px;
+    border: 1px solid #b8ddd2;
+    border-radius: 9px;
+    background: #f2faf7;
+    color: #075f55;
+    font: 800 11.5px/1.3 inherit;
+    cursor: pointer;
+  }
+
+  .save-status { color: #668078; font-size: 10.5px; text-align: right; }
+
   .tabs {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -112,6 +134,30 @@
   .contest-form { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 10px; }
   .contest-form .wide, .wide { grid-column: 1 / -1; }
   .default { border-color: #b8ddd2 !important; background: #e6f5f0; color: #006d61; font-weight: 700; }
+  .readonly { background: #f1f5f3; color: #426170; font-weight: 800; }
+
+  .planner {
+    margin-bottom: 9px;
+    padding: 10px;
+    border: 1px solid #d7e9e2;
+    border-radius: 11px;
+    background: #f8fcfa;
+  }
+
+  .planner-actions { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 7px; }
+  .planner-button.primary { border-color: var(--teal); background: var(--teal); color: #fff; }
+  .planner-summary { margin-top: 8px; color: #506d72; font-size: 10.5px; line-height: 1.45; }
+  .chip-list { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 7px; }
+  .chip {
+    padding: 4px 7px;
+    border: 0;
+    border-radius: 999px;
+    background: #e4f2ee;
+    color: #11685d;
+    font: 700 10.5px/1.25 inherit;
+    cursor: pointer;
+  }
+  .chip.more { background: #eef2f1; color: #506d72; }
 
   .content-warning {
     flex: 0 0 auto;
@@ -306,7 +352,12 @@
   .calendar h4 small { margin-left: 8px; color: #5f777d; font-size: 11.5px; font-weight: 700; letter-spacing: .7px; }
   .calendar table { width: 100%; border-collapse: collapse; color: var(--ink); font-size: 14.2px; text-align: center; table-layout: fixed; }
   .calendar th { padding: 2px 0 7px; font-weight: 800; }
-  .calendar td { height: 23px; padding: 1px; border-radius: 4px; }
+  .calendar td { position: relative; height: 23px; padding: 1px 1px 4px; border-radius: 4px; line-height: 1.15; }
+  .calendar.six-weeks { padding-top: 8px; padding-bottom: 8px; }
+  .calendar.six-weeks h4 { margin-bottom: 5px; font-size: 18px; }
+  .calendar.six-weeks table { font-size: 13.2px; }
+  .calendar.six-weeks th { padding-bottom: 4px; }
+  .calendar.six-weeks td { height: 19px; padding-bottom: 3px; }
 
   .sun { color: #e95639 !important; }
   .sat { color: #2569c0 !important; }
@@ -315,9 +366,14 @@
   .both { background: linear-gradient(135deg, var(--orange) 0 50%, var(--pink) 50% 100%); font-weight: 900; }
   .excluded { color: #91a09d !important; text-decoration: line-through; text-decoration-thickness: 1px; }
 
-  .legend { display: flex; align-items: center; justify-content: center; gap: 28px; color: var(--ink); font-size: 13.5px; font-weight: 800; }
+  .day-number { position: relative; z-index: 1; }
+  .event-bars { position: absolute; right: 2px; bottom: 1px; left: 2px; display: flex; gap: 1px; height: 3px; }
+  .event-bar { min-width: 0; flex: 1; border-radius: 2px; }
+
+  .legend { display: flex; flex-wrap: wrap; align-content: center; align-items: center; justify-content: center; gap: 5px 14px; color: var(--ink); font-size: 11.8px; font-weight: 800; line-height: 1.2; }
   .key { display: flex; align-items: center; gap: 7px; }
-  .swatch { width: 31px; height: 27px; border-radius: 7px; }
+  .swatch { width: 20px; height: 17px; border-radius: 5px; }
+  .swatch.bar { height: 5px; border-radius: 3px; }
 
   .note {
     align-self: start;
@@ -342,6 +398,56 @@
     object-position: right center;
   }
 
+  dialog {
+    width: min(520px, calc(100vw - 28px));
+    max-height: min(720px, calc(100vh - 28px));
+    padding: 0;
+    overflow: hidden;
+    border: 1px solid #b8d9d0;
+    border-radius: 18px;
+    background: #fffdf9;
+    color: var(--ink);
+    box-shadow: 0 20px 70px #001e4140;
+  }
+  dialog::backdrop { background: #001e416b; backdrop-filter: blur(2px); }
+  .dialog-shell { display: flex; max-height: min(720px, calc(100vh - 28px)); flex-direction: column; }
+  .dialog-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; padding: 20px 20px 12px; border-bottom: 1px solid #e0ece8; }
+  .dialog-head h2 { margin: 0 0 5px; font-size: 19px; line-height: 1.35; }
+  .dialog-head p { margin: 0; color: #587276; font-size: 11.5px; line-height: 1.5; }
+  .icon-button { width: 34px; height: 34px; flex: 0 0 auto; border: 0; border-radius: 50%; background: #edf5f2; color: var(--ink); font-size: 20px; cursor: pointer; }
+  .dialog-body { min-height: 0; padding: 16px 20px; overflow-y: auto; }
+  .dialog-foot { display: flex; justify-content: flex-end; gap: 8px; padding: 12px 20px 18px; border-top: 1px solid #e0ece8; }
+  .dialog-button { min-height: 38px; padding: 8px 14px; border: 1px solid #b8d9d0; border-radius: 9px; background: #f2f8f5; color: #234858; font: 800 12px/1.3 inherit; cursor: pointer; }
+  .dialog-button.primary { border-color: var(--teal); background: var(--teal); color: #fff; }
+  .dialog-button.danger { border-color: #f0b5a7; color: #c44830; }
+
+  .picker-nav { display: grid; grid-template-columns: 38px 1fr 38px; align-items: center; gap: 8px; margin-bottom: 10px; }
+  .picker-nav strong { text-align: center; }
+  .picker-nav button { height: 34px; border: 0; border-radius: 8px; background: #e8f4f0; color: var(--ink); font-size: 17px; cursor: pointer; }
+  .picker-nav button:disabled { cursor: default; opacity: .3; }
+  .picker-calendar { display: grid; grid-template-columns: repeat(7, 1fr); gap: 5px; }
+  .picker-weekday { padding: 4px 0; color: #526e75; font-size: 11px; font-weight: 800; text-align: center; }
+  .picker-day { aspect-ratio: 1.12; border: 1px solid #d9e7e3; border-radius: 9px; background: #fff; color: var(--ink); font: 800 12px/1 inherit; cursor: pointer; }
+  .picker-day:disabled { border-color: transparent; background: #f6f7f6; color: #bcc6c3; cursor: default; }
+  .picker-day.selected { border-color: #8ca39d; background: #e4ebe9; color: #667a75; text-decoration: line-through; }
+  .picker-day.blank { visibility: hidden; }
+  .picker-help { margin: 11px 0 0; color: #587276; font-size: 11px; line-height: 1.45; text-align: center; }
+
+  .modal-field { margin-bottom: 12px; }
+  .modal-field label { display: block; margin-bottom: 5px; color: #28495a; font-size: 11.5px; font-weight: 800; }
+  .modal-field input, .modal-field select { width: 100%; min-height: 40px; padding: 8px 10px; border: 1px solid var(--line); border-radius: 9px; background: #fff; color: var(--ink); font: 12px/1.4 inherit; }
+  .schedule-editor { padding: 13px; border-radius: 12px; background: #f1f8f5; }
+  .schedule-list, .saved-list { display: grid; gap: 8px; margin-top: 14px; }
+  .schedule-row, .saved-row { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 10px 11px; border: 1px solid #dce9e5; border-radius: 10px; background: #fff; }
+  .schedule-row strong, .saved-row strong { display: block; font-size: 12px; }
+  .schedule-row small, .saved-row small { display: block; margin-top: 2px; color: #667e80; font-size: 10.5px; line-height: 1.35; }
+  .row-actions { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 5px; }
+  .mini-button { padding: 5px 7px; border: 1px solid #cee0da; border-radius: 7px; background: #f6faf8; color: #29535a; font: 700 10px/1.2 inherit; cursor: pointer; }
+  .empty-list { padding: 16px; border: 1px dashed #cbded8; border-radius: 10px; color: #78908b; font-size: 11.5px; text-align: center; }
+  .save-compose { display: grid; grid-template-columns: 1fr auto; gap: 7px; }
+  .save-compose input { min-width: 0; min-height: 40px; padding: 8px 10px; border: 1px solid var(--line); border-radius: 9px; font: 12px/1.4 inherit; }
+  .backup-actions { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 14px; }
+
   @media (max-width: 820px) {
     body { overflow: auto; }
     .app { display: block; height: auto; }
@@ -363,6 +469,7 @@
     .lecture { background: #fdcd34 !important; }
     .contest { background: #fd744d !important; }
     .both { background: #fdb95d !important; }
+    .event-bar { print-color-adjust: exact !important; }
   }
 </style>
 </head>
@@ -371,7 +478,11 @@
   <aside class="panel">
     <div class="panel-head">
       <h1>특강 안내문 생성기</h1>
-      <p>항목을 입력하면 우측 안내문과 달력이 즉시 갱신됩니다. 비워 둔 항목은 출력에서 숨겨집니다. PDF 저장 시에도 색상이 유지됩니다.</p>
+      <p>항목을 입력하면 우측 안내문과 달력이 즉시 갱신됩니다. 비워 둔 항목은 출력에서 숨겨지며 PNG·PDF에도 동일하게 반영됩니다.</p>
+      <div class="savebar">
+        <button type="button" id="savesOpen">저장본 관리</button>
+        <span class="save-status" id="saveStatus" role="status">자동 저장 준비 중</span>
+      </div>
       <nav class="tabs" aria-label="입력 탭">
         <button class="tab active" data-tab="contest">대회 정보</button>
         <button class="tab" data-tab="lecture">특강 및 신청 정보</button>
@@ -398,7 +509,7 @@
           <div class="field"><label>특강 종료일</label><input data-key="lectureEnd" type="date" /></div>
         </div>
         <div class="grid2">
-          <div class="field"><label>특강 횟수</label><input data-key="sessions" type="number" min="1" placeholder="예: 8" /></div>
+          <div class="field"><label>특강 횟수 (자동)</label><input class="readonly" data-key="sessions" type="number" min="0" readonly aria-readonly="true" /></div>
           <div class="field"><label>특강비</label><input data-key="fee" placeholder="예: 560,000" /></div>
         </div>
         <div class="field"><label>대상</label><input data-key="audience" placeholder="예: 대회 참가 예정 학생" /></div>
@@ -406,7 +517,14 @@
           <div class="field"><label>특강 요일</label><input class="default" data-key="lectureDays" value="토요일 · 일요일" /></div>
           <div class="field"><label>특강 시간</label><input class="default" data-key="lectureTime" value="오후 5시 ~ 오후 8시" /></div>
         </div>
-        <div class="field"><label>특강 제외일</label><input data-key="lectureExclusions" placeholder="예: 2026-08-29, 2026-08-30" /></div>
+        <div class="planner">
+          <div class="planner-actions">
+            <button class="planner-button primary" type="button" id="exclusionsOpen">특강 제외일 선택</button>
+            <button class="planner-button" type="button" id="schedulesOpen">추가 일정 관리</button>
+          </div>
+          <div class="planner-summary" id="plannerSummary">특강 기간과 요일을 입력하면 선택 가능한 날짜가 표시됩니다.</div>
+          <div class="chip-list" id="exclusionChips"></div>
+        </div>
         <div class="grid2">
           <div class="field"><label>신청 마감일</label><input data-key="deadline" type="date" /></div>
           <div class="field"><label>문의처</label><input data-key="contact" placeholder="예: 카카오톡 채널 플레이웰" /></div>
@@ -449,10 +567,7 @@
           <section class="cal-area">
             <div class="calendar" id="cal1"></div>
             <div class="calendar" id="cal2"></div>
-            <div class="legend">
-              <span class="key"><i class="swatch" style="background:var(--orange)"></i>특강</span>
-              <span class="key"><i class="swatch" style="background:var(--pink)"></i>대회</span>
-            </div>
+            <div class="legend" id="legend"></div>
             <div class="note" id="note">※ 대회 참가자는 대회 준비를 위해 특강 참석을 권장합니다.<br />특강 특성상 결석에 따른 보강·환불은 불가합니다.</div>
           </section>
         </div>
@@ -463,8 +578,86 @@
   </section>
 </main>
 
+<dialog id="exclusionDialog" aria-labelledby="exclusionTitle">
+  <div class="dialog-shell">
+    <header class="dialog-head">
+      <div>
+        <h2 id="exclusionTitle">특강 제외일 선택</h2>
+        <p>특강 예정일만 선택할 수 있습니다. 날짜를 누르면 달력에서 특강 색상이 빠집니다.</p>
+      </div>
+      <button class="icon-button" type="button" data-close-dialog="exclusionDialog" aria-label="닫기">×</button>
+    </header>
+    <div class="dialog-body">
+      <div class="picker-nav">
+        <button type="button" id="exclusionPrev" aria-label="이전 달">‹</button>
+        <strong id="exclusionMonth">—</strong>
+        <button type="button" id="exclusionNext" aria-label="다음 달">›</button>
+      </div>
+      <div class="picker-calendar" id="exclusionCalendar"></div>
+      <p class="picker-help" id="exclusionHelp"></p>
+    </div>
+    <footer class="dialog-foot">
+      <button class="dialog-button" type="button" id="includeAll">모두 포함</button>
+      <button class="dialog-button primary" type="button" data-close-dialog="exclusionDialog">완료</button>
+    </footer>
+  </div>
+</dialog>
+
+<dialog id="scheduleDialog" aria-labelledby="scheduleTitle">
+  <div class="dialog-shell">
+    <header class="dialog-head">
+      <div>
+        <h2 id="scheduleTitle">추가 일정 관리</h2>
+        <p>명절·방학을 표시하고, 해당 기간의 특강 진행 여부도 함께 정할 수 있습니다.</p>
+      </div>
+      <button class="icon-button" type="button" data-close-dialog="scheduleDialog" aria-label="닫기">×</button>
+    </header>
+    <div class="dialog-body">
+      <div class="schedule-editor">
+        <div class="grid2">
+          <div class="modal-field"><label for="scheduleType">일정 종류</label><select id="scheduleType"><option>추석</option><option>설날</option><option>봄방학</option><option>여름방학</option><option>기타</option></select></div>
+          <div class="modal-field" id="scheduleCustomWrap" hidden><label for="scheduleCustom">일정 이름</label><input id="scheduleCustom" placeholder="예: 센터 휴원" /></div>
+        </div>
+        <div class="grid2">
+          <div class="modal-field"><label for="scheduleStart">시작일</label><input id="scheduleStart" type="date" /></div>
+          <div class="modal-field"><label for="scheduleEnd">종료일</label><input id="scheduleEnd" type="date" /></div>
+        </div>
+        <div class="modal-field"><label for="scheduleMode">특강 처리</label><select id="scheduleMode"><option value="exclude">특강 제외</option><option value="proceed">특강 진행</option><option value="display">표시만 (특강에 영향 없음)</option></select></div>
+        <button class="dialog-button primary" type="button" id="scheduleSave">일정 추가</button>
+      </div>
+      <div class="schedule-list" id="scheduleList"></div>
+    </div>
+    <footer class="dialog-foot"><button class="dialog-button primary" type="button" data-close-dialog="scheduleDialog">완료</button></footer>
+  </div>
+</dialog>
+
+<dialog id="savesDialog" aria-labelledby="savesTitle">
+  <div class="dialog-shell">
+    <header class="dialog-head">
+      <div>
+        <h2 id="savesTitle">저장본 관리</h2>
+        <p>최근 작업은 자동 저장됩니다. 반복해서 쓰는 내용은 이름을 붙여 따로 보관하세요.</p>
+      </div>
+      <button class="icon-button" type="button" data-close-dialog="savesDialog" aria-label="닫기">×</button>
+    </header>
+    <div class="dialog-body">
+      <div class="save-compose">
+        <input id="saveName" maxlength="50" placeholder="저장본 이름 (예: WRO INDIA 테스트)" />
+        <button class="dialog-button primary" type="button" id="saveCurrent">현재 내용 저장</button>
+      </div>
+      <div class="saved-list" id="savedList"></div>
+      <div class="backup-actions">
+        <button class="dialog-button" type="button" id="exportSaves">저장본 파일 내보내기</button>
+        <button class="dialog-button" type="button" id="importSaves">저장본 파일 가져오기</button>
+        <input id="importFile" type="file" accept="application/json,.json" hidden />
+      </div>
+    </div>
+    <footer class="dialog-foot"><button class="dialog-button primary" type="button" data-close-dialog="savesDialog">완료</button></footer>
+  </div>
+</dialog>
+
 <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js" integrity="sha512-BNaRQnYJYiPSqHHDb58B0yaPfCu+Wgds8Gp/gU33kqBtgNS4tSPHuGibyoeqMV/TJlSKda6FXzoEyYGjTe+vXA==" crossorigin="anonymous"></script>
-<script>
+<script type="text/plain" id="legacy-script">
 const keys = [
   'contestName', 'contestStart', 'contestEnd', 'venue', 'category', 'contestDesc',
   'lectureStart', 'lectureEnd', 'sessions', 'fee', 'audience', 'lectureDays',
@@ -843,5 +1036,6 @@ window.addEventListener('resize', () => {
 update();
 fitPreview();
 </script>
+<script src="app.js"></script>
 </body>
 </html>
