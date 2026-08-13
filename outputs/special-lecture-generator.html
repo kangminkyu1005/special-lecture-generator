@@ -177,18 +177,18 @@
   .title {
     min-width: 0;
     color: var(--ink);
-    font-size: 28px;
+    font-size: 32px;
     font-weight: 900;
-    letter-spacing: -1.4px;
-    line-height: 1.28;
+    letter-spacing: -1.55px;
+    line-height: 1.24;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
   }
 
-  .title.title-normal { font-size: 24px; letter-spacing: -1.1px; }
-  .title.title-dense { font-size: 21px; letter-spacing: -.8px; }
-  .title.title-min { font-size: 18px; letter-spacing: -.5px; }
+  .title.title-normal { font-size: 28px; letter-spacing: -1.25px; }
+  .title.title-dense { font-size: 24px; letter-spacing: -.95px; }
+  .title.title-min { font-size: 20px; letter-spacing: -.6px; }
 
   .schedule-title {
     display: flex;
@@ -196,7 +196,7 @@
     align-items: center;
     justify-content: center;
     color: var(--ink);
-    font-size: 24px;
+    font-size: 28px;
     font-weight: 900;
     line-height: 1.3;
     text-align: center;
@@ -208,72 +208,73 @@
     margin: 0 0 11px;
     overflow: hidden;
     color: #28495a;
-    font-size: 14px;
+    font-size: 15.5px;
     font-weight: 700;
     line-height: 1.52;
     text-overflow: ellipsis;
     white-space: nowrap;
   }
 
-  .subline.intro-dense { font-size: 12px; }
-  .subline.intro-min { font-size: 10.5px; }
+  .subline.intro-dense { font-size: 13.5px; }
+  .subline.intro-min { font-size: 11.5px; }
 
-  .content { display: grid; grid-template-columns: 530px minmax(0, 1fr); gap: 26px; height: 568px; }
+  .content { display: grid; grid-template-columns: 530px minmax(0, 1fr); gap: 26px; height: 590px; }
 
   .cards {
     display: grid;
-    height: 568px;
-    grid-template-rows: 198px 198px;
-    gap: 10px;
+    height: 590px;
+    grid-template-rows: repeat(2, minmax(0, 1fr));
+    gap: 12px;
     align-content: start;
     overflow: hidden;
   }
 
   .card {
     min-height: 0;
-    height: 198px;
-    padding: 18px 20px;
+    height: auto;
+    padding: 22px 22px;
     overflow: hidden;
     border-radius: 18px;
     background: var(--soft);
     box-shadow: 0 4px 10px #038b780c;
   }
 
-  .card h3 { margin: 0 0 10px; color: var(--ink); font-size: 16px; line-height: 1.42; }
-  .info-list { font-size: 13.4px; line-height: 1.52; }
-  .info-line { display: flex; align-items: flex-start; gap: 8px; margin-bottom: 4px; }
-  .info-label { min-width: 82px; color: #087e6e; font-weight: 800; }
+  .card h3 { margin: 0 0 12px; color: var(--ink); font-size: 18px; line-height: 1.42; }
+  .info-list { font-size: 15.2px; line-height: 1.5; }
+  .info-line { display: flex; align-items: flex-start; gap: 9px; margin-bottom: 5px; }
+  .info-label { min-width: 91px; color: #087e6e; font-weight: 800; }
   .info-label::before { margin-right: 6px; color: var(--orange); font-size: 8px; content: '●'; }
   .info-value { color: #193848; overflow-wrap: anywhere; }
-  .warn { margin: 10px 0 0 !important; color: #e95639; font-size: 14px; font-weight: 800; line-height: 1.48; }
+  .warn { margin: 12px 0 0 !important; color: #e95639; font-size: 15.2px; font-weight: 800; line-height: 1.48; }
 
-  .card.density-normal { padding: 16px 18px; }
-  .card.density-normal h3 { margin-bottom: 8px; font-size: 15px; }
-  .card.density-normal .info-list { font-size: 12.4px; line-height: 1.45; }
-  .card.density-normal .info-line { gap: 7px; margin-bottom: 3px; }
-  .card.density-normal .info-label { min-width: 75px; }
-  .card.density-normal .warn { margin-top: 8px !important; font-size: 12.8px; }
+  .card.density-normal { padding: 19px 20px; }
+  .card.density-normal h3 { margin-bottom: 10px; font-size: 17px; }
+  .card.density-normal .info-list { font-size: 14px; line-height: 1.44; }
+  .card.density-normal .info-line { gap: 8px; margin-bottom: 4px; }
+  .card.density-normal .info-label { min-width: 84px; }
+  .card.density-normal .warn { margin-top: 10px !important; font-size: 14px; }
 
-  .card.density-dense { padding: 14px 16px; }
-  .card.density-dense h3 { margin-bottom: 6px; font-size: 14px; }
-  .card.density-dense .info-list { font-size: 11.3px; line-height: 1.37; }
-  .card.density-dense .info-line { gap: 6px; margin-bottom: 2px; }
-  .card.density-dense .info-label { min-width: 68px; }
-  .card.density-dense .warn { margin-top: 6px !important; font-size: 11.5px; line-height: 1.38; }
+  .card.density-dense { padding: 16px 18px; }
+  .card.density-dense h3 { margin-bottom: 8px; font-size: 15px; }
+  .card.density-dense .info-list { font-size: 12.5px; line-height: 1.37; }
+  .card.density-dense .info-line { gap: 7px; margin-bottom: 3px; }
+  .card.density-dense .info-label { min-width: 76px; }
+  .card.density-dense .warn { margin-top: 8px !important; font-size: 12.5px; line-height: 1.38; }
 
-  .card.density-min { padding: 12px 14px; }
-  .card.density-min h3 { margin-bottom: 5px; font-size: 13px; }
-  .card.density-min .info-list { font-size: 10.3px; line-height: 1.3; }
-  .card.density-min .info-line { gap: 5px; margin-bottom: 1px; }
-  .card.density-min .info-label { min-width: 63px; }
-  .card.density-min .warn { margin-top: 5px !important; font-size: 10.5px; line-height: 1.3; }
+  .card.density-min { padding: 13px 15px; }
+  .card.density-min h3 { margin-bottom: 6px; font-size: 13.5px; }
+  .card.density-min .info-list { font-size: 11px; line-height: 1.3; }
+  .card.density-min .info-line { gap: 5px; margin-bottom: 2px; }
+  .card.density-min .info-label { min-width: 67px; }
+  .card.density-min .warn { margin-top: 6px !important; font-size: 11px; line-height: 1.3; }
 
   .cal-area {
     display: grid;
     grid-template-columns: 1fr;
-    grid-template-rows: 198px 198px 34px auto;
-    gap: 10px;
-    height: 568px;
+    grid-template-rows: 208px 208px 36px auto;
+    gap: 9px;
+    height: 590px;
+    padding-bottom: 50px;
     align-content: start;
   }
 
@@ -284,7 +285,7 @@
     justify-content: center;
     margin: 0 0 11px;
     color: var(--ink);
-    font-size: 22px;
+    font-size: 27px;
     font-weight: 900;
     line-height: 1.4;
     text-align: center;
@@ -292,8 +293,8 @@
 
   .calendar {
     min-height: 0;
-    height: 198px;
-    padding: 10px 18px 12px;
+    height: 208px;
+    padding: 11px 20px 12px;
     overflow: hidden;
     border: 1px solid #83bdb1;
     border-radius: 15px;
@@ -301,11 +302,11 @@
     box-shadow: 0 3px 8px #038b780c;
   }
 
-  .calendar h4 { margin: 0 0 7px; color: var(--ink); font-size: 16px; line-height: 1.3; text-align: center; }
-  .calendar h4 small { margin-left: 7px; color: #5f777d; font-size: 10px; font-weight: 700; letter-spacing: .7px; }
-  .calendar table { width: 100%; border-collapse: collapse; color: var(--ink); font-size: 12.3px; text-align: center; table-layout: fixed; }
-  .calendar th { padding: 2px 0 5px; font-weight: 800; }
-  .calendar td { height: 20px; padding: 1px; border-radius: 3px; }
+  .calendar h4 { margin: 0 0 9px; color: var(--ink); font-size: 19px; line-height: 1.3; text-align: center; }
+  .calendar h4 small { margin-left: 8px; color: #5f777d; font-size: 11.5px; font-weight: 700; letter-spacing: .7px; }
+  .calendar table { width: 100%; border-collapse: collapse; color: var(--ink); font-size: 14.2px; text-align: center; table-layout: fixed; }
+  .calendar th { padding: 2px 0 7px; font-weight: 800; }
+  .calendar td { height: 23px; padding: 1px; border-radius: 4px; }
 
   .sun { color: #e95639 !important; }
   .sat { color: #2569c0 !important; }
@@ -314,17 +315,17 @@
   .both { background: linear-gradient(135deg, var(--orange) 0 50%, var(--pink) 50% 100%); font-weight: 900; }
   .excluded { color: #91a09d !important; text-decoration: line-through; text-decoration-thickness: 1px; }
 
-  .legend { display: flex; align-items: center; justify-content: center; gap: 24px; color: var(--ink); font-size: 12px; font-weight: 800; }
+  .legend { display: flex; align-items: center; justify-content: center; gap: 28px; color: var(--ink); font-size: 13.5px; font-weight: 800; }
   .key { display: flex; align-items: center; gap: 7px; }
-  .swatch { width: 28px; height: 25px; border-radius: 6px; }
+  .swatch { width: 31px; height: 27px; border-radius: 7px; }
 
   .note {
     align-self: start;
-    padding: 12px 18px;
+    padding: 11px 18px;
     border-radius: 14px;
     background: #e7f5ef;
     color: #087e6e;
-    font-size: 11.5px;
+    font-size: 12.3px;
     font-weight: 700;
     line-height: 1.5;
     text-align: center;
@@ -335,8 +336,8 @@
     position: absolute;
     right: 34px;
     bottom: 17px;
-    width: 118px;
-    height: 40px;
+    width: 130px;
+    height: 42px;
     object-fit: contain;
     object-position: right center;
   }
