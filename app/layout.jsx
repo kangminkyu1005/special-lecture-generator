@@ -1,8 +1,8 @@
 import "./globals.css";
 
 export const metadata = {
-  title: "특강 안내문 생성기",
-  description: "대회 및 특강 안내문을 작성하고 미리 보는 PLAYWELL 도구",
+  title: "PLAYWELL 안내문 스튜디오",
+  description: "분기·대회·특강 안내문 작성과 PDF·이미지 다운로드",
 };
 
 export default function RootLayout({ children }) {

@@ -1,0 +1,10 @@
+import fs from 'node:fs';
+import path from 'node:path';
+import {createRequire} from 'node:module';
+const require=createRequire(import.meta.url),root=path.resolve(import.meta.dirname,'..');
+const sources=[require.resolve('html2canvas/dist/html2canvas.min.js'),require.resolve('jspdf/dist/jspdf.umd.min.js')];
+const data=JSON.parse(fs.readFileSync(path.join(root,'outputs/korean-holidays.json'),'utf8'));
+for(const year of Object.values(data))for(const h of year)h.name=h.name.replace('기독탄신일','성탄절').replace('대체 휴일','대체공휴일');
+fs.writeFileSync(path.join(root,'outputs/quarterly-vendor.js'),sources.map(p=>fs.readFileSync(p,'utf8')).join('\n;\n')+'\n;window.QUARTER_HOLIDAYS='+JSON.stringify(data)+';\n');
+for(const file of fs.readdirSync(path.join(root,'outputs')))if(fs.statSync(path.join(root,'outputs',file)).isFile())fs.copyFileSync(path.join(root,'outputs',file),path.join(root,'public',file));
+console.log('Public assets prepared; Korean holiday candidates: 2020–2045.');

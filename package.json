@@ -7,11 +7,14 @@
     "node": ">=22.13.0"
   },
   "scripts": {
-    "dev": "vite",
-    "build": "vinext build",
+    "dev": "node build/prepare-assets.mjs && vite",
+    "build": "node build/prepare-assets.mjs && vinext build",
+    "test": "node --test tests/quarterly.test.mjs",
     "start": "vinext start"
   },
   "dependencies": {
+    "html2canvas": "1.4.1",
+    "jspdf": "3.0.3",
     "next": "16.2.6",
     "react": "19.2.6",
     "react-dom": "19.2.6"
