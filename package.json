@@ -9,7 +9,7 @@
   "scripts": {
     "dev": "node build/prepare-assets.mjs && vite",
     "build": "node build/prepare-assets.mjs && vinext build",
-    "test": "node --test tests/quarterly.test.mjs",
+    "test": "node --test tests/*.test.mjs",
     "start": "vinext start"
   },
   "dependencies": {

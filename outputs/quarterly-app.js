@@ -21,7 +21,10 @@ function normalize(raw){
 }
 try{const raw=localStorage.getItem(AUTO);if(raw)state=normalize(JSON.parse(raw));const ds=JSON.parse(localStorage.getItem(SAVES)||'[]');if(Array.isArray(ds))drafts=ds.slice(0,40);}catch{ /* Invalid storage never prevents a fresh document. */ }
 function toast(msg){$('#toast').textContent=msg;$('#toast').hidden=false;clearTimeout(toastTimer);toastTimer=setTimeout(()=>$('#toast').hidden=true,4200);}
-function store(){clearTimeout(saveTimer);saveTimer=setTimeout(()=>{try{localStorage.setItem(AUTO,JSON.stringify(state));$('#save-status').textContent='이 브라우저에 저장됨';}catch{$('#save-status').textContent='저장 공간 부족 · 설정 파일로 저장하세요';}},250);}
+function saveNow(){clearTimeout(saveTimer);try{localStorage.setItem(AUTO,JSON.stringify(state));$('#save-status').textContent='이 브라우저에 저장됨';}catch{$('#save-status').textContent='저장 공간 부족 · 설정 파일로 저장하세요';}}
+function store(){clearTimeout(saveTimer);saveTimer=setTimeout(saveNow,250);}
+document.querySelector('.studio-nav').addEventListener('click',saveNow);
+window.addEventListener('pagehide',saveNow);
 function allClosures(){return [...(state.carry?.closures||[]),...state.closures];}
 function closedOn(date){return allClosures().find(c=>date>=c.start&&date<=c.end);}
 function holidayCandidates(){

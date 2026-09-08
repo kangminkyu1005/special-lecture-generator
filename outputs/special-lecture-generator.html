@@ -40,7 +40,7 @@
   .app {
     display: grid;
     grid-template-columns: 390px minmax(0, 1fr);
-    height: 100vh;
+    height: calc(100dvh - var(--studio-header-height));
   }
 
   .panel {
@@ -459,7 +459,7 @@
   @media (max-width: 820px) {
     body { overflow: auto; }
     .app { display: block; height: auto; }
-    .panel { height: 100vh; min-height: 600px; }
+    .panel { height: calc(100dvh - var(--studio-header-height)); min-height: 600px; }
     .stage { height: 70vh; min-height: 420px; padding: 12px; }
   }
 
@@ -480,17 +480,21 @@
     .event-bar { print-color-adjust: exact !important; }
   }
 </style>
+<link rel="stylesheet" href="studio-shell.css" />
 </head>
 <body>
+<header class="studio-header">
+  <div class="studio-brand"><img src="playwell-official-logo-main.png" alt="PLAYWELL"><span>안내문 스튜디오</span></div>
+  <nav class="studio-nav" aria-label="안내문 종류"><a href="special-lecture-generator.html" aria-current="page">대회·특강</a><a href="quarterly-notice.html">분기 안내문</a></nav>
+  <span class="studio-save-status" id="saveStatus" role="status">이 브라우저에 자동 저장</span>
+</header>
 <main class="app">
   <aside class="panel">
     <div class="panel-head">
       <h1>특강 안내문 생성기</h1>
-      <a href="quarterly-notice.html" style="display:inline-block;color:#038b78;font-weight:700;margin:4px 0 8px;text-decoration:underline">분기 안내문 생성기 →</a>
       <p>항목을 입력하면 우측 안내문과 달력이 즉시 갱신됩니다. 비워 둔 항목은 출력에서 숨겨지며 PNG·PDF에도 동일하게 반영됩니다.</p>
       <div class="savebar">
         <button type="button" id="savesOpen">저장본 관리</button>
-        <span class="save-status" id="saveStatus" role="status">자동 저장 준비 중</span>
       </div>
       <nav class="tabs" aria-label="입력 탭">
         <button class="tab active" data-tab="contest">대회 정보</button>

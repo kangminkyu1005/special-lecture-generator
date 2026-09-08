@@ -831,6 +831,8 @@
     applyInfoDensity();
   });
   window.addEventListener('beforeunload', saveAutosaveNow);
+  window.addEventListener('pagehide', saveAutosaveNow);
+  document.querySelector('.studio-nav').addEventListener('click', saveAutosaveNow);
 
   loadStorage();
   fitPreview();

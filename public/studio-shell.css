@@ -1,0 +1,24 @@
+/* Shared navigation for both notice editors. Never part of the exported sheet. */
+:root { --studio-header-height: 72px; }
+.studio-header { height:var(--studio-header-height); box-sizing:border-box; display:flex; align-items:center; gap:28px; padding:0 28px; border-bottom:1px solid #d5e1dd; background:#fdf7ee; color:#001e41; font:500 14px/1.55 'Noto Sans KR','Malgun Gothic',sans-serif; }
+.studio-brand { display:flex; align-items:center; gap:16px; flex-shrink:0; font-weight:700; white-space:nowrap; }
+.studio-brand img { width:104px; height:42px; object-fit:contain; }
+.studio-nav { display:flex; align-items:center; gap:8px; }
+.studio-nav a { display:flex; align-items:center; justify-content:center; min-height:44px; padding:9px 15px; border-radius:8px; color:#58716e; text-decoration:none; white-space:nowrap; font-weight:700; }
+.studio-nav a:hover { background:#e8f2ec; color:#001e41; }
+.studio-nav a[aria-current="page"] { background:#038b78; color:#fff; }
+.studio-nav a:focus-visible { outline:3px solid #b78300; outline-offset:3px; }
+.studio-save-status { margin-left:auto; color:#58716e; font-size:12px; text-align:right; }
+@media(max-width:1000px) {
+  .studio-header { padding:0 16px; gap:16px; }
+}
+@media(max-width:720px) {
+  :root { --studio-header-height:132px; }
+  .studio-header { display:grid; grid-template-rows:32px 44px 18px; gap:4px; padding:10px 14px; align-content:center; }
+  .studio-brand { gap:14px; }
+  .studio-brand img { width:84px; height:32px; }
+  .studio-nav { gap:8px; }
+  .studio-nav a { padding:8px 12px; }
+  .studio-save-status { margin:0; text-align:left; font-size:11px; }
+}
+@media print { .studio-header { display:none!important; } }
