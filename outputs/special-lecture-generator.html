@@ -214,13 +214,16 @@
     width: 1123px;
     min-width: 1123px;
     height: 794px;
-    padding: 69px 34px 24px;
+    padding: 44px 34px 62px;
+    display: flex;
+    flex-direction: column;
     border: 4px solid var(--teal);
     outline: 2px solid var(--ink);
     background: var(--paper);
   }
 
   .top {
+    flex-shrink: 0;
     display: grid;
     grid-template-columns: 530px minmax(0, 1fr);
     align-items: center;
@@ -265,18 +268,19 @@
     font-size: 15.5px;
     font-weight: 700;
     line-height: 1.52;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+    white-space: normal;
+    overflow-wrap: anywhere;
+    max-height: 4.56em;
   }
 
   .subline.intro-dense { font-size: 13.5px; }
   .subline.intro-min { font-size: 11.5px; }
 
-  .content { display: grid; grid-template-columns: 530px minmax(0, 1fr); gap: 26px; height: 590px; }
+  .content { display: grid; grid-template-columns: 530px minmax(0, 1fr); gap: 26px; flex: 1; min-height: 0; }
 
   .cards {
     display: grid;
-    height: 590px;
+    height: 100%;
     grid-template-rows: repeat(2, minmax(0, 1fr));
     gap: 12px;
     align-content: start;
@@ -550,7 +554,7 @@
     <div class="actions">
       <button class="reset" id="reset">입력 초기화</button>
       <button class="print" id="pngDownload">PNG 저장</button>
-      <button class="print" onclick="window.print()">PDF 저장</button>
+      <button class="print" id="pdfDownload">PDF 저장</button>
     </div>
   </aside>
 

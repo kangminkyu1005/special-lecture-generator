@@ -70,6 +70,12 @@
     }).join('');
   }
 
+  function formatFee(value) {
+    var text = String(value || '').trim();
+    var digits = text.replace(/[\s,₩]/g, '').replace(/원+$/, '');
+    return /^\d+$/.test(digits) ? digits.replace(/\B(?=(\d{3})+(?!\d))/g, ',') + '원' : text;
+  }
+
   function getLectureDayIndexes(value) {
     var text = String(value || '').trim();
     if (!text) return new Set();
@@ -377,12 +383,12 @@
     var modes = ['', 'intro-dense', 'intro-min'];
     intro.classList.remove('intro-dense', 'intro-min');
     var modeIndex = 0;
-    while (intro.scrollWidth > intro.clientWidth + 1 && modeIndex < modes.length - 1) {
+    while ((intro.scrollWidth > intro.clientWidth + 1 || intro.scrollHeight > intro.clientHeight + 1) && modeIndex < modes.length - 1) {
       if (modes[modeIndex]) intro.classList.remove(modes[modeIndex]);
       modeIndex += 1;
       intro.classList.add(modes[modeIndex]);
     }
-    layoutFlags.introOverflow = intro.scrollWidth > intro.clientWidth + 1;
+    layoutFlags.introOverflow = intro.scrollWidth > intro.clientWidth + 1 || intro.scrollHeight > intro.clientHeight + 1;
     updateContentWarning();
   }
 
@@ -431,7 +437,7 @@
       ['특강 시간', state.lectureTime],
       ['특강 횟수', state.sessions ? state.sessions + '회' : ''],
       ['대상', state.audience],
-      ['특강비', state.fee ? state.fee + '원' : ''],
+      ['특강비', formatFee(state.fee)],
       ['제외 날짜', compactDateList(Array.from(excludedDates).sort(), 5)],
       ['추가 일정', compactScheduleList()],
       ['신청 마감', state.deadline ? fmt(state.deadline) : ''],
@@ -823,6 +829,15 @@
     update();
   });
   $('#pngDownload').addEventListener('click', downloadPng);
+  $('#pdfDownload').addEventListener('click', async function () {
+    await document.fonts.ready;
+    applyTitleScale();applyIntroScale();applyInfoDensity();
+    if (layoutFlags.titleOverflow || layoutFlags.introOverflow || layoutFlags.cardsOverflow) {
+      $('#contentWarning').scrollIntoView({block:'nearest'});
+      return;
+    }
+    window.print();
+  });
 
   window.addEventListener('resize', function () {
     fitPreview();

@@ -4,6 +4,25 @@ const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&
 const AUTO='playwell.quarterly.v1', SAVES=AUTO+'.saved';
 const defaults=()=>({schemaVersion:1,year:2026,quarter:4,start:'2026-10-06',weeks:12,days:[2,3,4,5,6],closures:[],events:[],holidays:[],holidayMode:'auto',academy:'PLAYWELL',logo:'',opacity:40,density:'normal',showCount:false,preCopy:'결석 최소 일주일 전 연락 시 본 수업 참여를 도와드립니다.',groups:[{name:'체스로브릭, 로보틱스 베이직',time:'토요일 오후 4시',week:2,day:6,manual:['','','']},{name:'로보틱스 티어 ~ 탑 티어',time:'토요일 오후 4시',week:4,day:6,manual:['','','']}],carry:{dates:{},closures:[]}});
 let state=defaults(),result=null,saveTimer,toastTimer,picker={year:2026,month:10,group:0,slot:0},drafts=[],busy=false;
+let contentOverflow=false;
+const previewWarning=document.createElement('p');
+previewWarning.id='preview-validation';previewWarning.setAttribute('role','status');
+$('.preview-toolbar').after(previewWarning);
+function measureOverflow(){
+  const bottom=$('.notice-bottom'),sheet=$('#sheet');
+  return [...bottom.children].some(el=>el.scrollHeight>bottom.clientHeight+2 || el.scrollWidth>el.clientWidth+2) || sheet.scrollHeight>sheet.clientHeight+2;
+}
+function fitContent(){
+  const sheet=$('#sheet');
+  // Start at the requested density on every edit, then tighten spacing before reducing type.
+  sheet.classList.remove('auto-fit','layout-overflow');
+  if(measureOverflow())sheet.classList.add('auto-fit');
+  if(measureOverflow())sheet.classList.add('compact');
+  contentOverflow=measureOverflow();
+  sheet.classList.toggle('layout-overflow',contentOverflow);
+  $('.preview-area').classList.toggle('has-overflow',contentOverflow);
+  previewWarning.textContent=contentOverflow?'A4 한 장의 분량을 초과했습니다. 아래는 전체 내용 확인용이며, 문구나 일정 수를 줄여야 다운로드·인쇄할 수 있습니다.':'';
+}
 function normalize(raw){
   if(!raw||raw.schemaVersion!==1) throw new Error('이 생성기에서 저장한 설정 파일을 선택해 주세요.');
   const d=defaults(),s={...d};
@@ -77,13 +96,13 @@ function renderSheet(){
 function layoutWarnings(){
   const issues=[];
   for(const g of state.groups){const dates=makeupDates(state,result,g);if(dates.some(v=>!v.date))issues.push(`${g.name}: 미정 보강일을 선택해 주세요.`);if(dates.some(v=>v.date&&closedOn(v.date)))issues.push(`${g.name}: 휴원 기간과 겹치는 보강일을 변경해 주세요.`);if(new Set(dates.filter(v=>v.date).map(v=>v.date)).size<dates.filter(v=>v.date).length)issues.push(`${g.name}: 보강 날짜가 중복됩니다.`);}
-  const bottom=$('.notice-bottom'),footer=$('.notice-footer');
-  if(bottom&&[...bottom.children].some(el=>el.scrollHeight>bottom.clientHeight+3)||footer&&footer.getBoundingClientRect().bottom>$('#sheet').getBoundingClientRect().bottom+2)issues.push('한 장의 내용이 넘칩니다. 글자 크기를 줄이거나 문구를 간추려 주세요.');
+  if(contentOverflow)issues.push('한 장의 내용이 넘칩니다. 문구나 일정 수를 줄여 주세요.');
   return [...new Set(issues)];
 }
 function update({editors=false,holidays=false}={}){
-  try{result=calculate(state);if(holidays&&state.holidayMode==='auto')holidayCandidates();$('#period-result').textContent=`${short(result.start)} ~ ${short(result.end)}`;$('#week-result').textContent=`${result.weeks.length}주 수업 · ${result.skipped.length}주 휴원 · 다음 시작 ${short(result.nextStart)}`;$('#week-list').innerHTML=result.weeks.map(w=>`${w.index}번째 수업 주 · ${w.badge}주차 · ${short(w.start)} ~ ${short(w.end)}`).join('<br>');$('#opacity-value').value=state.opacity+'%';renderSheet();if(editors)renderEditors();else renderDateButtons();fit();$('#validation').textContent=layoutWarnings().join(' ');store();}catch(e){result=null;$('#validation').textContent=e.message;$('#period-result').textContent='입력 확인 필요';$('#week-result').textContent='미리보기는 마지막으로 계산된 상태입니다.';}
+  try{result=calculate(state);if(holidays&&state.holidayMode==='auto')holidayCandidates();$('#period-result').textContent=`${short(result.start)} ~ ${short(result.end)}`;$('#week-result').textContent=`${result.weeks.length}주 수업 · ${result.skipped.length}주 휴원 · 다음 시작 ${short(result.nextStart)}`;$('#week-list').innerHTML=result.weeks.map(w=>`${w.index}번째 수업 주 · ${w.badge}주차 · ${short(w.start)} ~ ${short(w.end)}`).join('<br>');$('#opacity-value').value=state.opacity+'%';renderSheet();fitContent();if(editors)renderEditors();else renderDateButtons();fit();$('#validation').textContent=layoutWarnings().join(' ');store();}catch(e){result=null;$('#validation').textContent=e.message;previewWarning.textContent=e.message;$('#period-result').textContent='입력 확인 필요';$('#week-result').textContent='미리보기는 마지막으로 계산된 상태입니다.';}
   ['png','pdf','print','html','next-quarter'].forEach(k=>$('#'+k).disabled=!result||busy);
+  ['png','pdf','print','html'].forEach(k=>$('#'+k).disabled=!result||busy||contentOverflow);
 }
 function fit(){const stage=$('#stage');$('#fit').style.transform=`scale(${Math.max(.1,Math.min((stage.clientWidth-8)/1123,(stage.clientHeight-8)/794,1.5))})`;}
 function renderDrafts(){$('#saved-list').innerHTML='<option value="">저장본 선택</option>'+drafts.map((s,i)=>`<option value="${i}">${esc(s.title)}</option>`).join('');}
