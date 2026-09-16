@@ -60,3 +60,8 @@ ChatGPT Sites 배포용 소스가 함께 구성되어 있으며, 사이트 루�
 ## 참고
 
 `work/`의 스크립트에는 과거 작업 과정에서 발생한 문자 인코딩 손상이 남아 있습니다. 실제 사용본은 `outputs/special-lecture-generator.html`입니다.
+
+## Shared notice storage
+Both editors now use `/api/notices/quarterly` and `/api/notices/lecture` backed by Sites D1. Current input and saved drafts are shared with everyone who can open this public site. Visible screens poll every two seconds and refresh on focus/reconnection. Revision checks prevent unnoticed overwrites. Conflicts offer loading the shared state or explicitly saving the local input again. Local storage is only used for recovery and legacy import, never as the shared source of truth.
+
+Existing local input is imported only with **이 기기의 기존 내용 가져오기**. Each notice type has its own shared document. Keep the tab open until the header reports a successful shared save. A pending save blocks normal in-site navigation and warns on closing. Migration files are immutable after deployment.

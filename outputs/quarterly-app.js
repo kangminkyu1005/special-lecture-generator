@@ -1,6 +1,7 @@
 import {parse,iso,weekday,short,daysText,calculate,makeupDates,monthRows,advance} from './quarterly-engine.js';
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
 const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+let sharedSync=null;
 const AUTO='playwell.quarterly.v1', SAVES=AUTO+'.saved';
 const defaults=()=>({schemaVersion:1,year:2026,quarter:4,start:'2026-10-06',weeks:12,days:[2,3,4,5,6],closures:[],events:[],holidays:[],holidayMode:'auto',academy:'PLAYWELL',logo:'',opacity:40,density:'normal',showCount:false,preCopy:'결석 최소 일주일 전 연락 시 본 수업 참여를 도와드립니다.',groups:[{name:'체스로브릭, 로보틱스 베이직',time:'토요일 오후 4시',week:2,day:6,manual:['','','']},{name:'로보틱스 티어 ~ 탑 티어',time:'토요일 오후 4시',week:4,day:6,manual:['','','']}],carry:{dates:{},closures:[]}});
 let state=defaults(),result=null,saveTimer,toastTimer,picker={year:2026,month:10,group:0,slot:0},drafts=[],busy=false;
@@ -38,12 +39,12 @@ function normalize(raw){
   Object.keys(s.carry.dates).forEach(parse);s.carry.closures.forEach(c=>{parse(c.start);parse(c.end);});
   calculate(s);return s;
 }
-try{const raw=localStorage.getItem(AUTO);if(raw)state=normalize(JSON.parse(raw));const ds=JSON.parse(localStorage.getItem(SAVES)||'[]');if(Array.isArray(ds))drafts=ds.slice(0,40);}catch{ /* Invalid storage never prevents a fresh document. */ }
+let legacy=null;try{const raw=localStorage.getItem(AUTO);if(raw)legacy={current:normalize(JSON.parse(raw)),drafts:JSON.parse(localStorage.getItem(SAVES)||'[]')};}catch{}
+
 function toast(msg){$('#toast').textContent=msg;$('#toast').hidden=false;clearTimeout(toastTimer);toastTimer=setTimeout(()=>$('#toast').hidden=true,4200);}
-function saveNow(){clearTimeout(saveTimer);try{localStorage.setItem(AUTO,JSON.stringify(state));$('#save-status').textContent='이 브라우저에 저장됨';}catch{$('#save-status').textContent='저장 공간 부족 · 설정 파일로 저장하세요';}}
-function store(){clearTimeout(saveTimer);saveTimer=setTimeout(saveNow,250);}
-document.querySelector('.studio-nav').addEventListener('click',saveNow);
-window.addEventListener('pagehide',saveNow);
+function saveNow(){clearTimeout(saveTimer);sharedSync?.changed();}
+function store(){saveNow();}
+
 function allClosures(){return [...(state.carry?.closures||[]),...state.closures];}
 function closedOn(date){return allClosures().find(c=>date>=c.start&&date<=c.end);}
 function holidayCandidates(){
@@ -150,7 +151,7 @@ $('#add-event').onclick=()=>{state.events.push({name:'',date:'',note:''});update
 $('#add-holiday').onclick=()=>{try{const date=$('#holiday-date').value;parse(date);const name=$('#holiday-name').value.trim();if(!name)throw new Error('공휴일 이름을 입력해 주세요.');state.holidayMode='manual';state.holidays.push({name,date,enabled:true});update({editors:true});$('#holiday-name').value='';$('#holiday-date').value='';}catch(e){toast(e.message);}};
 $('#refresh-holidays').onclick=()=>{state.holidayMode='auto';update({editors:true,holidays:true});};
 $('#next-quarter').onclick=()=>{saveDraft(false);state=advance(state,result);syncFields();update({editors:true,holidays:true});toast('다음 분기를 만들었습니다. 휴원 기간과 주요 일정을 확인해 주세요.');};
-function saveDraft(notify=true){const title=`${state.year}년 ${state.quarter}분기 · ${new Date().toLocaleString('ko-KR')}`;drafts.unshift({title,state:JSON.parse(JSON.stringify(state))});drafts=drafts.slice(0,40);try{localStorage.setItem(SAVES,JSON.stringify(drafts));renderDrafts();if(notify)toast('현재 분기를 보관했습니다.');}catch{toast('저장 공간이 부족합니다. 설정 파일로 저장해 주세요.');}}
+function saveDraft(notify=true){const title=`${state.year}년 ${state.quarter}분기 · ${new Date().toLocaleString('ko-KR')}`;drafts.unshift({title,state:JSON.parse(JSON.stringify(state))});drafts=drafts.slice(0,40);try{sharedSync?.changed();renderDrafts();if(notify)toast('현재 분기를 보관했습니다.');}catch{toast('저장 공간이 부족합니다. 설정 파일로 저장해 주세요.');}}
 $('#save-draft').onclick=()=>{if(result)saveDraft();};$('#load-draft').onclick=()=>{const v=$('#saved-list').value;if(v==='')return;try{state=normalize(drafts[Number(v)].state);syncFields();update();toast('저장본을 불러왔습니다.');}catch(e){toast(e.message);}};
 $('#json-save').onclick=()=>download(new Blob([JSON.stringify(state,null,2)],{type:'application/json'}),filename()+'_설정.json');
 $('#json-load').onchange=async e=>{const f=e.target.files[0];if(!f)return;try{if(f.size>8e6)throw new Error('설정 파일은 8MB 이하로 선택해 주세요.');state=normalize(JSON.parse(await f.text()));syncFields();update();toast('설정을 불러왔습니다.');}catch(err){toast(err.message);}e.target.value='';};
@@ -162,3 +163,5 @@ $('#html').onclick=async()=>{try{const css=await (await fetch('quarterly.css')).
 $('#zoom').onclick=()=>{const open=$('.preview-area').classList.toggle('expanded');$('#zoom').textContent=open?'편집 화면으로':'크게 보기';fit();};
 window.addEventListener('resize',fit);document.addEventListener('keydown',e=>{if(e.key==='Escape'){$('.preview-area').classList.remove('expanded');$('#zoom').textContent='크게 보기';fit();}});
 syncFields();update({editors:true,holidays:state.holidayMode==='auto'});document.fonts.ready.then(()=>update());
+
+sharedSync=window.createNoticeSync({id:'quarterly',status:$('#save-status'),legacy,read:()=>({current:state,drafts}),apply:data=>{state=normalize(data.current);drafts=data.drafts;syncFields();renderDrafts();update({editors:true});}});

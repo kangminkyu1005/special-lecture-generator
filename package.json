@@ -26,6 +26,8 @@
     "@types/react-dom": "19.2.3",
     "@vitejs/plugin-react": "6.0.2",
     "@vitejs/plugin-rsc": "0.5.26",
+    "drizzle-kit": "0.31.4",
+    "drizzle-orm": "0.44.5",
     "react-server-dom-webpack": "19.2.6",
     "typescript": "5.9.3",
     "vinext": "0.0.50",

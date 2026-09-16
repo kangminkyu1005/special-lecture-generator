@@ -17,7 +17,7 @@ test('both editors share identical navigation except current page and status id'
 });
 test('shared header is omitted from printing and both editors flush before navigation',()=>{
   assert.match(read('studio-shell.css'),/@media print\s*\{\s*\.studio-header\s*\{\s*display:none!important/);
-  for(const name of ['app.js','quarterly-app.js']){
+  for(const name of ['shared-sync.js']){
     const source=read(name);
     assert.match(source,/\.studio-nav[\s\S]*addEventListener\('click'/);
     assert.match(source,/addEventListener\('pagehide'/);

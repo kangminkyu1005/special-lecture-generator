@@ -15,6 +15,7 @@
   var exclusionExpanded = false;
   var saveTimer = null;
   var storageAvailable = true;
+  var sharedSync=null;
   var AUTO_KEY = 'playwell-special-lecture-autosave-v3';
   var SAVES_KEY = 'playwell-special-lecture-saves-v3';
   var weekdays = ['일', '월', '화', '수', '목', '금', '토'];
@@ -187,56 +188,17 @@
     $('#saveStatus').textContent = text;
   }
 
-  function saveAutosaveNow() {
-    if (!storageAvailable) return;
-    try {
-      localStorage.setItem(AUTO_KEY, JSON.stringify(snapshot()));
-      var now = new Date();
-      setSaveStatus('자동 저장됨 ' + String(now.getHours()).padStart(2, '0') + ':' + String(now.getMinutes()).padStart(2, '0'));
-    } catch (error) {
-      storageAvailable = false;
-      setSaveStatus('이 브라우저에서는 자동 저장 불가');
-    }
-  }
-
-  function queueAutosave() {
-    if (!storageAvailable) return;
-    setSaveStatus('저장 중…');
-    window.clearTimeout(saveTimer);
-    saveTimer = window.setTimeout(saveAutosaveNow, 280);
-  }
-
+  function saveAutosaveNow() { if(sharedSync) sharedSync.changed(); }
+  function queueAutosave() { saveAutosaveNow(); }
+  function saveDraftList() { saveAutosaveNow(); }
   function loadStorage() {
-    try {
-      var savedRaw = localStorage.getItem(SAVES_KEY);
-      var parsedSaves = savedRaw ? JSON.parse(savedRaw) : [];
-      savedDrafts = Array.isArray(parsedSaves) ? parsedSaves.filter(function (item) {
-        return item && item.id && item.name && validSnapshot(item.data);
-      }) : [];
-      var autoRaw = localStorage.getItem(AUTO_KEY);
-      if (autoRaw) {
-        var autoData = JSON.parse(autoRaw);
-        if (restoreSnapshot(autoData, false)) {
-          setSaveStatus('최근 작업 복원됨');
-          return;
-        }
-      }
-    } catch (error) {
-      storageAvailable = false;
-      savedDrafts = [];
-      setSaveStatus('이 브라우저에서는 자동 저장 불가');
-    }
+    var legacy=null;
+    try { var raw=localStorage.getItem(AUTO_KEY);if(raw&&validSnapshot(JSON.parse(raw)))legacy={current:JSON.parse(raw),drafts:JSON.parse(localStorage.getItem(SAVES_KEY)||'[]')}; } catch(e){}
     update(false);
-    if (storageAvailable) setSaveStatus('자동 저장 사용 중');
-  }
-
-  function saveDraftList() {
-    try {
-      localStorage.setItem(SAVES_KEY, JSON.stringify(savedDrafts));
-    } catch (error) {
-      storageAvailable = false;
-      setSaveStatus('이 브라우저에서는 저장 불가');
-    }
+    sharedSync=window.createNoticeSync({id:'lecture',status:$('#saveStatus'),legacy,
+      read:function(){return {current:snapshot(),drafts:savedDrafts};},
+      apply:function(data){savedDrafts=data.drafts;restoreSnapshot(data.current,false);renderSavedDrafts();}
+    });
   }
 
   function makeId() {

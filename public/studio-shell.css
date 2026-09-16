@@ -22,3 +22,10 @@
   .studio-save-status { margin:0; text-align:left; font-size:11px; }
 }
 @media print { .studio-header { display:none!important; } }
+
+.shared-sync-panel{display:flex;align-items:center;flex-wrap:wrap;gap:8px;padding:8px 16px;background:#e8f2ec;color:#001e41;font:400 14px/1.5 'Noto Sans KR','Malgun Gothic',sans-serif;}
+.shared-sync-panel button{min-height:44px;padding:8px 12px;border:1px solid #58716e;border-radius:8px;background:white;color:#001e41;font:inherit;cursor:pointer;}
+.shared-sync-panel button[hidden]{display:none}.shared-sync-panel button:focus-visible{outline:3px solid #b78300;outline-offset:2px}
+.studio-save-status{font-size:14px;overflow-wrap:anywhere}
+@media(max-width:720px){.studio-save-status{font-size:12px}.shared-sync-panel{padding:8px 14px}}
+@media print{.shared-sync-panel{display:none!important}}

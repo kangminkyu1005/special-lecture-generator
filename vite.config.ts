@@ -12,6 +12,7 @@ export default defineConfig({
       inspectorPort: false,
       config: {
         main: "./worker/index.ts",
+        d1_databases: [{binding:"DB",database_name:"site-creator-d1",database_id:"00000000-0000-4000-8000-000000000000"}],
         compatibility_flags: ["nodejs_compat"],
       },
     }),
