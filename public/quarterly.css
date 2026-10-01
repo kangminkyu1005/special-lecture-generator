@@ -28,7 +28,7 @@ button{border:1px solid var(--line);border-radius:9px;padding:9px 12px;backgroun
 .editor p{margin:4px 0 12px}
 .editor-heading p{color:var(--muted)}
 .tabs{display:grid;grid-template-columns:repeat(4,1fr);padding:0 20px;border-bottom:1px solid var(--line)}
-.tabs button{border:0;border-radius:0;background:transparent;padding:12px 4px;color:var(--muted);white-space:nowrap}
+.tabs button{border:0;border-radius:0;background:transparent;padding:12px 4px;color:var(--muted);white-space:normal;line-height:1.4;min-height:52px}
 .tabs button[aria-selected=true]{border-bottom:3px solid var(--teal);color:var(--teal)}
 .form-scroll{padding:20px 24px;overflow:auto;flex:1}
 .form-scroll label{display:block;margin:0 0 14px}

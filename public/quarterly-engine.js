@@ -53,6 +53,16 @@ export function makeupDates(s,result,g) {
     return {date,manual:false};
   });
 }
+// Notices cover the displayed quarter and any teaching weeks beyond it.
+export function noticeClosures(s,result) {
+  const first=`${s.year}-${String((s.quarter-1)*3+1).padStart(2,'0')}-01`;
+  const last=iso(Date.UTC(s.year,s.quarter*3,0)/DAY);
+  const low=[first,s.start].sort()[0],high=[last,result.end].sort().at(-1);
+  return [...(s.carry?.closures||[]),...s.closures]
+    .filter((c,i,rows)=>rows.findIndex(x=>x.start===c.start&&x.end===c.end&&x.name===c.name)===i)
+    .filter(c=>c.end>=low&&c.start<=high)
+    .sort((a,b)=>a.start.localeCompare(b.start)||a.end.localeCompare(b.end));
+}
 export function monthRows(year,month) {
   const first=parse(`${year}-${String(month).padStart(2,'0')}-01`);
   const end=Date.UTC(year,month,0)/DAY;
